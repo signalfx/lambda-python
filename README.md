@@ -19,7 +19,7 @@ import signalfx_lambda
 
 @signalfx_lambda.wrapper
 def handler(event, context):
-	# your code
+    # your code
 ```
 
 ### Sending metric from the Lambda function
