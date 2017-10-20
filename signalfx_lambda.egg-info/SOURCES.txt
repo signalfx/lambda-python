@@ -1,0 +1,10 @@
+setup.py
+signalfx_lambda/__init__.py
+signalfx_lambda/version.py
+signalfx_lambda.egg-info/PKG-INFO
+signalfx_lambda.egg-info/SOURCES.txt
+signalfx_lambda.egg-info/dependency_links.txt
+signalfx_lambda.egg-info/pbr.json
+signalfx_lambda.egg-info/requires.txt
+signalfx_lambda.egg-info/top_level.txt
+signalfx_lambda.egg-info/zip-safe
