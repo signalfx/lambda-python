@@ -45,7 +45,7 @@ The Lambda wrapper sends the following metrics to SignalFx:
 
 | Metric Name  | Type | Description |
 | ------------- | ------------- | ---|
-| aws.lambda.invocations  | Counter  | Count number of lambda invocations|
+| aws.lambda.invocations  | Counter  | Count number of Lambda invocations|
 | aws.lambda.coldStarts  | Counter  | Count number of cold starts|
 | aws.lambda.errors  | Counter  | Count number of errors from underlying Lambda handler|
 | aws.lambda.duration  | Gauge  | Milliseconds in execution time of underlying Lambda handler|
