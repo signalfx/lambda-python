@@ -39,7 +39,30 @@ def handler(event, context):
     # your code
 ```
 
-### Sending metric from the Lambda function
+### Metrics and Dimensions sent by the wrapper
+
+Lambda wrapper sends following metrics to SignalFx 
+
+| Metric Name  | Type | Description |
+| ------------- | ------------- | ---|
+| aws.lambda.invocations  | Counter  | Count number of lambda invocations|
+| aws.lambda.coldStarts  | Counter  | Count number of coldstarts|
+| aws.lambda.errors  | Counter  | Count number of errors from underlying lambda handler|
+| aws.lambda.duration  | Gauge  | Milliseconds in execution time of underlying lambda handler|
+
+Lambda wrapper includes following dimensions to all data points sent to SignalFx
+
+| Dimension | Description |
+| ------------- | ---|
+| lambda_arn  | ARN of the lambda function instance |
+| aws_region  | AWS Region  |
+| aws_account_id | AWS Account ID  |
+| aws_function_name  | AWS Function Name (if it is not event source mapping lambda invocation)|
+| aws_function_version  | AWS Function Version (if it is not event source mapping lambda invocation)|
+| event-source-mappings  | AWS Function Name (if it is event source mapping lambda invocation) |
+
+
+### Sending custom metric from the Lambda function
 
 ```
 import signalfx_lambda
