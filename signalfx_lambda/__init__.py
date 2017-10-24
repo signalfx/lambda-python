@@ -10,7 +10,7 @@ is_cold_start = True
 
 default_dimensions = {}
 
-ingest = {}
+ingest = None
 
 
 def map_datapoint(data_point):
@@ -29,7 +29,8 @@ def map_datapoints(data_points):
 
 # less convenient method
 def send_metric(counters=[], gauges=[]):
-    ingest.send(counters=map_datapoints(counters), gauges=map_datapoints(gauges))
+    if ingest:
+        ingest.send(counters=map_datapoints(counters), gauges=map_datapoints(gauges))
 
 
 # convenience method
@@ -46,7 +47,6 @@ def wrapper(func):
     def call(*args, **kwargs):
         global ingest
         ingest = sfx.ingest(os.environ.get('SIGNALFX_AUTH_TOKEN'))
-
         context = args[1]  # expect context to be second argument
         function_arn = context.invoked_function_arn
 
@@ -84,12 +84,7 @@ def wrapper(func):
         send_metric(
             counters=start_counters
         )
-        end_counters = [
-            {
-                'metric': 'aws.lambda.completed',
-                'value': 1
-            }
-        ]
+        end_counters = []
         time_start = datetime.datetime.now()
         try:
             result = func(*args, **kwargs)

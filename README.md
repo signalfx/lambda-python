@@ -10,7 +10,7 @@ The SignalFx Java Lambda Wrapper is a wrapper around an AWS Lambda Python functi
 
 To install from CDN
 ```
-$ pip install https://cdn.signalfx.com/signalfx_lambda-0.0.1-py2.py3-none-any.whl
+$ pip install https://cdn.signalfx.com/signalfx_lambda-0.0.2-py2.py3-none-any.whl
 ```
 
 
@@ -39,7 +39,30 @@ def handler(event, context):
     # your code
 ```
 
-### Sending metric from the Lambda function
+### Metrics and dimensions sent by the wrapper
+
+The Lambda wrapper sends the following metrics to SignalFx:
+
+| Metric Name  | Type | Description |
+| ------------- | ------------- | ---|
+| aws.lambda.invocations  | Counter  | Count number of Lambda invocations|
+| aws.lambda.coldStarts  | Counter  | Count number of cold starts|
+| aws.lambda.errors  | Counter  | Count number of errors from underlying Lambda handler|
+| aws.lambda.duration  | Gauge  | Milliseconds in execution time of underlying Lambda handler|
+
+The Lambda wrapper adds the following dimensions to all data points sent to SignalFx:
+
+| Dimension | Description |
+| ------------- | ---|
+| lambda_arn  | ARN of the Lambda function instance |
+| aws_region  | AWS Region  |
+| aws_account_id | AWS Account ID  |
+| aws_function_name  | AWS Function Name (if it is not an event source mapping Lambda invocation)|
+| aws_function_version  | AWS Function Version (if it is an not event source mapping Lambda invocation)|
+| event-source-mappings  | AWS Function Name (if it is an event source mapping Lambda invocation) |
+
+
+### Sending custom metric from the Lambda function
 
 ```
 import signalfx_lambda
