@@ -10,7 +10,7 @@ The SignalFx Java Lambda Wrapper is a wrapper around an AWS Lambda Python functi
 
 To install from CDN
 ```
-$ pip install https://cdn.signalfx.com/signalfx_lambda-0.0.1-py2.py3-none-any.whl
+$ pip install https://cdn.signalfx.com/signalfx_lambda-0.0.2-py2.py3-none-any.whl
 ```
 
 
