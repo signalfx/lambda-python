@@ -10,7 +10,7 @@ is_cold_start = True
 
 default_dimensions = {}
 
-ingest = sfx.ingest(os.environ.get('SIGNALFX_AUTH_TOKEN'))
+ingest = None
 
 
 def map_datapoint(data_point):
@@ -29,7 +29,8 @@ def map_datapoints(data_points):
 
 # less convenient method
 def send_metric(counters=[], gauges=[]):
-    ingest.send(counters=map_datapoints(counters), gauges=map_datapoints(gauges))
+    if ingest:
+        ingest.send(counters=map_datapoints(counters), gauges=map_datapoints(gauges))
 
 
 # convenience method
@@ -44,7 +45,8 @@ def send_gauge(metric_name, metric_value, dimensions={}):
 
 def wrapper(func):
     def call(*args, **kwargs):
-
+        global ingest
+        ingest = sfx.ingest(os.environ.get('SIGNALFX_AUTH_TOKEN'))
         context = args[1]  # expect context to be second argument
         function_arn = context.invoked_function_arn
 
@@ -106,7 +108,6 @@ def wrapper(func):
             )
 
             # flush everything
-            global ingest
             ingest.stop()
 
     return call
