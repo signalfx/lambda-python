@@ -39,27 +39,27 @@ def handler(event, context):
     # your code
 ```
 
-### Metrics and Dimensions sent by the wrapper
+### Metrics and dimensions sent by the wrapper
 
-Lambda wrapper sends following metrics to SignalFx 
+The Lambda wrapper sends the following metrics to SignalFx:
 
 | Metric Name  | Type | Description |
 | ------------- | ------------- | ---|
 | aws.lambda.invocations  | Counter  | Count number of lambda invocations|
-| aws.lambda.coldStarts  | Counter  | Count number of coldstarts|
-| aws.lambda.errors  | Counter  | Count number of errors from underlying lambda handler|
-| aws.lambda.duration  | Gauge  | Milliseconds in execution time of underlying lambda handler|
+| aws.lambda.coldStarts  | Counter  | Count number of cold starts|
+| aws.lambda.errors  | Counter  | Count number of errors from underlying Lambda handler|
+| aws.lambda.duration  | Gauge  | Milliseconds in execution time of underlying Lambda handler|
 
-Lambda wrapper includes following dimensions to all data points sent to SignalFx
+The Lambda wrapper adds the following dimensions to all data points sent to SignalFx:
 
 | Dimension | Description |
 | ------------- | ---|
-| lambda_arn  | ARN of the lambda function instance |
+| lambda_arn  | ARN of the Lambda function instance |
 | aws_region  | AWS Region  |
 | aws_account_id | AWS Account ID  |
-| aws_function_name  | AWS Function Name (if it is not event source mapping lambda invocation)|
-| aws_function_version  | AWS Function Version (if it is not event source mapping lambda invocation)|
-| event-source-mappings  | AWS Function Name (if it is event source mapping lambda invocation) |
+| aws_function_name  | AWS Function Name (if it is not an event source mapping Lambda invocation)|
+| aws_function_version  | AWS Function Version (if it is an not event source mapping Lambda invocation)|
+| event-source-mappings  | AWS Function Name (if it is an event source mapping Lambda invocation) |
 
 
 ### Sending custom metric from the Lambda function
