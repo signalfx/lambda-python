@@ -85,6 +85,11 @@ pip install python-lambda-local
 python-lambda-local tests/test.py tests/event.json -a 'arn:aws:lambda:us-east-1:accountId:function:functionNamePython:$LATEST'
 ```
 
+### Packaging
+```
+python setup.py bdist_wheel --universal
+```
+
 ### License
 
 Apache Software License v2. Copyright © 2014-2017 SignalFx
