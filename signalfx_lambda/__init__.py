@@ -56,15 +56,14 @@ def wrapper(func):
 
         default_dimensions = {
             'lambda_arn': function_arn,
+            'aws_function_version': context.function_version,
+            'aws_function_name': context.function_name,
             'aws_region': splitted[3],
             'aws_account_id': splitted[4],
         }
         if splitted[5] == 'function':
-            default_dimensions['aws_function_name'] = splitted[6]
             if len(splitted) == 8:
-                default_dimensions['aws_function_version'] = splitted[7]
-            else:
-                default_dimensions['aws_function_version'] = context.function_version
+                default_dimensions['aws_function_qualifier'] = splitted[7]
         elif splitted[5] == 'event-source-mappings':
             default_dimensions['event_source_mappings'] = splitted[6]
 
