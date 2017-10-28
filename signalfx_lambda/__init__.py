@@ -43,7 +43,7 @@ def send_gauge(metric_name, metric_value, dimensions={}):
     send_metric(gauges=[{'metric': metric_name, 'value': metric_value, 'dimensions': dimensions}])
 
 
-def wrapper(func):
+def wrapper_decorator(func):
     def call(*args, **kwargs):
         global ingest
         ingest = sfx.ingest(os.environ.get('SIGNALFX_AUTH_TOKEN'))
@@ -54,13 +54,13 @@ def wrapper(func):
         splitted = function_arn.split(':')
         global default_dimensions
 
-        default_dimensions = {
+        default_dimensions.update({
             'lambda_arn': function_arn,
             'aws_function_version': context.function_version,
             'aws_function_name': context.function_name,
             'aws_region': splitted[3],
             'aws_account_id': splitted[4],
-        }
+        })
         if splitted[5] == 'function':
             if len(splitted) == 8:
                 default_dimensions['aws_function_qualifier'] = splitted[7]
@@ -86,6 +86,7 @@ def wrapper(func):
         end_counters = []
         time_start = datetime.datetime.now()
         try:
+            print(default_dimensions)
             result = func(*args, **kwargs)
             return result
         except:
@@ -110,3 +111,18 @@ def wrapper(func):
             ingest.stop()
 
     return call
+
+
+def wrapper(param):
+    if callable(param):
+        # plain wrapper with no parameter
+        # call the wrapper decorator like normally would
+        return wrapper_decorator(param)
+    else:
+        if isinstance(param, dict):
+            # wrapper with dimension parameter
+            # assign default dimensions
+            # then return the wrapper decorator
+            default_dimensions.update(param)
+        return wrapper_decorator
+
