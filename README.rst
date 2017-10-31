@@ -57,10 +57,10 @@ The Lambda wrapper adds the following dimensions to all data points sent to Sign
 | lambda_arn  | ARN of the Lambda function instance |
 | aws_region  | AWS Region  |
 | aws_account_id | AWS Account ID  |
-| aws_function_name  | AWS Function Name (if it is not an event source mapping Lambda invocation)|
-| aws_function_version  | AWS Function Version (if it is an not event source mapping Lambda invocation)|
-| event-source-mappings  | AWS Function Name (if it is an event source mapping Lambda invocation) |
-
+| aws_function_name  | AWS Function Name |
+| aws_function_version  | AWS Function Version |
+| aws_function_qualifier  | AWS Function Version Qualifier (version or version alias if it is not an event source mapping Lambda invocation) |
+| event_source_mappings  | AWS Function Name (if it is an event source mapping Lambda invocation) |
 
 ### Sending custom metric from the Lambda function
 
