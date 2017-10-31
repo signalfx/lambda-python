@@ -86,7 +86,6 @@ def wrapper_decorator(func):
         end_counters = []
         time_start = datetime.datetime.now()
         try:
-            print(default_dimensions)
             result = func(*args, **kwargs)
             return result
         except:
