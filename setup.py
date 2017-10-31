@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 with open('signalfx_lambda/version.py') as f:
     exec(f.read())
 
-with open('README.md') as readme:
+with open('README.rst') as readme:
     long_description = readme.read()
 
 with open('requirements.txt') as f:
