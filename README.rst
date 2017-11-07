@@ -45,10 +45,10 @@ The Lambda wrapper sends the following metrics to SignalFx:
 
 | Metric Name  | Type | Description |
 | ------------- | ------------- | ---|
-| aws.lambda.invocations  | Counter  | Count number of Lambda invocations|
-| aws.lambda.coldStarts  | Counter  | Count number of cold starts|
-| aws.lambda.errors  | Counter  | Count number of errors from underlying Lambda handler|
-| aws.lambda.duration  | Gauge  | Milliseconds in execution time of underlying Lambda handler|
+| function.invocations  | Counter  | Count number of Lambda invocations|
+| function.cold_starts  | Counter  | Count number of cold starts|
+| function.errors  | Counter  | Count number of errors from underlying Lambda handler|
+| function.duration  | Gauge  | Milliseconds in execution time of underlying Lambda handler|
 
 The Lambda wrapper adds the following dimensions to all data points sent to SignalFx:
 
@@ -61,6 +61,9 @@ The Lambda wrapper adds the following dimensions to all data points sent to Sign
 | aws_function_version  | AWS Function Version |
 | aws_function_qualifier  | AWS Function Version Qualifier (version or version alias if it is not an event source mapping Lambda invocation) |
 | event_source_mappings  | AWS Function Name (if it is an event source mapping Lambda invocation) |
+| aws_execution_env  | AWS execution environment (e.g. AWS_Lambda_python3.6) |
+| function_wrapper_version  | SignalFx function wrapper qualifier (e.g. signalfx_lambda_0.0.2) |
+| metric_source | the literal value of 'lambda_wrapper' |
 
 ### Sending custom metric from the Lambda function
 

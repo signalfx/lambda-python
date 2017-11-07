@@ -2,6 +2,8 @@ import signalfx
 import os
 import datetime
 
+from version import name, version
+
 ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT')
 
 sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point) if ingest_end_point else signalfx.SignalFx()
@@ -60,7 +62,12 @@ def wrapper_decorator(func):
             'aws_function_name': context.function_name,
             'aws_region': splitted[3],
             'aws_account_id': splitted[4],
+            'metric_source': 'lambda_wrapper',
+            'function_wrapper_version': name + '_' + version
         })
+        runtime_env = os.environ.get('AWS_EXECUTION_ENV')
+        if runtime_env is not None:
+            default_dimensions['aws_execution_env'] = runtime_env
         if splitted[5] == 'function':
             if len(splitted) == 8:
                 default_dimensions['aws_function_qualifier'] = splitted[7]
@@ -70,13 +77,13 @@ def wrapper_decorator(func):
         global is_cold_start
         start_counters = [
             {
-                'metric': 'aws.lambda.invocations',
+                'metric': 'function.invocations',
                 'value': 1
             },
         ]
         if is_cold_start:
             start_counters.append({
-                'metric': 'aws.lambda.coldStarts',
+                'metric': 'function.cold_starts',
                 'value': 1
             })
             is_cold_start = False
@@ -90,7 +97,7 @@ def wrapper_decorator(func):
             return result
         except:
             end_counters.append({
-                'metric': 'aws.lambda.errors',
+                'metric': 'function.errors',
                 'value': 1
             })
             raise
@@ -100,7 +107,7 @@ def wrapper_decorator(func):
                 counters=end_counters,
                 gauges=[
                     {
-                        'metric': 'aws.lambda.duration',
+                        'metric': 'function.duration',
                         'value': time_taken.total_seconds() * 1000
                     }
                 ]
