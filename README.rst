@@ -63,7 +63,7 @@ The Lambda wrapper adds the following dimensions to all data points sent to Sign
 | event_source_mappings  | AWS Function Name (if it is an event source mapping Lambda invocation) |
 | aws_execution_env  | AWS execution environment (e.g. AWS_Lambda_python3.6) |
 | function_wrapper_version  | SignalFx function wrapper qualifier (e.g. signalfx_lambda_0.0.2) |
-| metric_source | the literal value of 'lambda_wrapper' |
+| metric_source | The literal value of 'lambda_wrapper' |
 
 ### Sending custom metric from the Lambda function
 
