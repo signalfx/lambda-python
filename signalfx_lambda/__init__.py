@@ -57,7 +57,6 @@ def wrapper_decorator(func):
         global default_dimensions
 
         default_dimensions.update({
-            'lambda_arn': function_arn,
             'aws_function_version': context.function_version,
             'aws_function_name': context.function_name,
             'aws_region': splitted[3],
@@ -69,10 +68,17 @@ def wrapper_decorator(func):
         if runtime_env is not None:
             default_dimensions['aws_execution_env'] = runtime_env
         if splitted[5] == 'function':
+            updatedArn = list(splitted)
             if len(splitted) == 8:
                 default_dimensions['aws_function_qualifier'] = splitted[7]
+                updatedArn[7] = context.function_version
+            elif len(splitted) == 7:
+                updatedArn.append(context.function_version)
+            default_dimensions['lambda_arn'] = ':'.join(updatedArn)
+
         elif splitted[5] == 'event-source-mappings':
             default_dimensions['event_source_mappings'] = splitted[6]
+            default_dimensions['lambda_arn'] = function_arn
 
         global is_cold_start
         start_counters = [
