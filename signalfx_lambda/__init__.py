@@ -4,9 +4,9 @@ import datetime
 
 from version import name, version
 
-ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT')
+ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.ingest.signalfx.com')
 
-sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point) if ingest_end_point else signalfx.SignalFx()
+sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point)
 
 is_cold_start = True
 
@@ -48,7 +48,8 @@ def send_gauge(metric_name, metric_value, dimensions={}):
 def wrapper_decorator(func):
     def call(*args, **kwargs):
         global ingest
-        ingest = sfx.ingest(os.environ.get('SIGNALFX_AUTH_TOKEN'))
+        # timeout for connecting = 1 and responding 0.3
+        ingest = sfx.ingest(os.environ.get('SIGNALFX_AUTH_TOKEN'), timeout=(1, 0.3))
         context = args[1]  # expect context to be second argument
         function_arn = context.invoked_function_arn
 
