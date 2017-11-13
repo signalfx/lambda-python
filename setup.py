@@ -18,7 +18,7 @@ setup(
     version=version,  # noqa
     author='SignalFx, Inc',
     author_email='info@signalfx.com',
-    description='SignalFx Lambda Python Library',
+    description='SignalFx Lambda Python Wrapper',
     license='Apache Software License v2',
     long_description=long_description,
     zip_safe=True,
