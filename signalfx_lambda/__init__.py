@@ -4,7 +4,7 @@ import datetime
 
 from version import name, version
 
-ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.ingest.signalfx.com')
+ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.signalfx.com')
 
 sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point)
 
