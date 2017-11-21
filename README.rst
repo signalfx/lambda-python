@@ -26,7 +26,7 @@ Environment Variables
 
     SIGNALFX_AUTH_TOKEN=access token
 
-    SIGNALFX_INGEST_ENDPOINT=[optional]
+    SIGNALFX_INGEST_ENDPOINT=[https://pops.signalfx.com]
 
 Wrapping a function
 ~~~~~~~~~~~~~~~~~~~
