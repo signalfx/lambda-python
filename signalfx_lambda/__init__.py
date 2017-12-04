@@ -5,6 +5,7 @@ import datetime
 from version import name, version
 
 ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.signalfx.com')
+ingest_timeout = os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3)
 
 sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point)
 
@@ -50,7 +51,7 @@ def generate_wrapper_decorator(access_token):
         def call(*args, **kwargs):
             global ingest
             # timeout for connecting = 1 and responding 0.3
-            ingest = sfx.ingest(access_token, timeout=(1, 0.3))
+            ingest = sfx.ingest(access_token, timeout=(1, ingest_timeout))
             context = args[1]  # expect context to be second argument
             function_arn = context.invoked_function_arn
 
