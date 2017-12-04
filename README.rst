@@ -17,7 +17,7 @@ To install from PyPi
 
 ::
 
-    $ pip install pip install signalfx_lambda
+    $ pip install signalfx_lambda
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
@@ -26,7 +26,10 @@ Environment Variables
 
     SIGNALFX_AUTH_TOKEN=access token
 
-    SIGNALFX_INGEST_ENDPOINT=[https://pops.signalfx.com]
+    # optional
+
+    SIGNALFX_INGEST_ENDPOINT=ingest endpoint [ default: https://pops.signalfx.com ]
+    SIGNALFX_SEND_TIMEOUT=timeout in seconds for sending datapoint [ default: 0.3 ]
 
 Wrapping a function
 ~~~~~~~~~~~~~~~~~~~
