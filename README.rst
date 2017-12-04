@@ -29,7 +29,7 @@ Environment Variables
     # optional
 
     SIGNALFX_INGEST_ENDPOINT=ingest endpoint [ default: https://pops.signalfx.com ]
-    SIGNALFX_SEND_TIMEOUT=timeout for sending datapoint [ default: 0.3 ]
+    SIGNALFX_SEND_TIMEOUT=timeout in seconds for sending datapoint [ default: 0.3 ]
 
 Wrapping a function
 ~~~~~~~~~~~~~~~~~~~
