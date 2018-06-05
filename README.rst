@@ -6,7 +6,7 @@ SignalFx Python Lambda Wrapper.
 Usage
 -----
 
-The SignalFx Java Lambda Wrapper is a wrapper around an AWS Lambda
+The SignalFx Python Lambda Wrapper is a wrapper around an AWS Lambda
 Python function handler, used to instrument execution of the function
 and send metrics to SignalFx.
 
