@@ -35,6 +35,10 @@ def send_metric(counters=[], gauges=[]):
     if ingest:
         ingest.send(counters=map_datapoints(counters), gauges=map_datapoints(gauges))
 
+# convenience method
+def send_event(event_type, dimensions={}, properties={})
+    if ingest:
+        ingest.send_event(event_type=event_type, dimensions=dimensions, properties=properties)
 
 # convenience method
 def send_counter(metric_name, metric_value=1, dimensions={}):
