@@ -2,7 +2,7 @@ import signalfx
 import os
 import datetime
 
-from version import name, version
+from .version import name, version
 
 ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.signalfx.com')
 ingest_timeout = os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3)
@@ -27,7 +27,7 @@ def map_datapoint(data_point):
 
 
 def map_datapoints(data_points):
-    return map(map_datapoint, data_points)
+    return list(map(map_datapoint, data_points))
 
 
 # less convenient method
