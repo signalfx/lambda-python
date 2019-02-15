@@ -13,7 +13,7 @@ def get_fields(context):
     splitted = function_arn.split(':')
 
     fields.update({
-        'aws_request_id': context.aws_request_id
+        'aws_request_id': context.aws_request_id,
         'aws_function_version': context.function_version,
         'aws_function_name': context.function_name,
         'aws_region': splitted[3],
