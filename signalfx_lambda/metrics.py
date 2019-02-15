@@ -2,6 +2,7 @@ import signalfx
 import os
 import datetime
 
+from . import utils
 from .version import name, version
 
 ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.signalfx.com')
@@ -53,35 +54,9 @@ def generate_wrapper_decorator(access_token):
             # timeout for connecting = 1 and responding 0.3
             ingest = sfx.ingest(access_token, timeout=(1, ingest_timeout))
             context = args[1]  # expect context to be second argument
-            function_arn = context.invoked_function_arn
 
-            # Expected format arn:aws:lambda:us-east-1:accountId:function:functionName:$LATEST
-            splitted = function_arn.split(':')
             global default_dimensions
-
-            default_dimensions.update({
-                'aws_function_version': context.function_version,
-                'aws_function_name': context.function_name,
-                'aws_region': splitted[3],
-                'aws_account_id': splitted[4],
-                'metric_source': 'lambda_wrapper',
-                'function_wrapper_version': name + '_' + version
-            })
-            runtime_env = os.environ.get('AWS_EXECUTION_ENV')
-            if runtime_env is not None:
-                default_dimensions['aws_execution_env'] = runtime_env
-            if splitted[5] == 'function':
-                updatedArn = list(splitted)
-                if len(splitted) == 8:
-                    default_dimensions['aws_function_qualifier'] = splitted[7]
-                    updatedArn[7] = context.function_version
-                elif len(splitted) == 7:
-                    updatedArn.append(context.function_version)
-                default_dimensions['lambda_arn'] = ':'.join(updatedArn)
-
-            elif splitted[5] == 'event-source-mappings':
-                default_dimensions['event_source_mappings'] = splitted[6]
-                default_dimensions['lambda_arn'] = function_arn
+            default_dimensions.update(utils.get_fields(context))
 
             global is_cold_start
             start_counters = [
