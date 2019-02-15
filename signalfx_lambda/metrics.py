@@ -5,7 +5,7 @@ import datetime
 from . import utils
 from .version import name, version
 
-ingest_end_point = os.environ.get('SIGNALFX_INGEST_ENDPOINT', 'https://pops.signalfx.com')
+ingest_end_point = os.environ.get('SIGNALFX_METRICS_URL', 'https://pops.signalfx.com')
 ingest_timeout = os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3)
 
 sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point)
@@ -105,7 +105,7 @@ def generate_wrapper_decorator(access_token):
 
 
 def wrapper(*args, **kwargs):
-    access_token = os.environ.get('SIGNALFX_AUTH_TOKEN')
+    access_token = os.environ.get('SIGNALFX_ACCESS_TOKEN')
     if len(args) == 1 and callable(args[0]):
         # plain wrapper with no parameter
         # call the wrapper decorator like normally would
