@@ -35,7 +35,10 @@ def wrapper(func):
 def init_jaeger_tracer(context):
     global span_prefix
     span_prefix = os.getenv('SIGNALFX_SPAN_PREFIX', 'lambda_python_')
-    endpoint = os.getenv('SIGNALFX_TRACING_URL', 'https://ingest.signalfx.com/v1/trace')
+
+    endpoint = os.environ.get('SIGNALFX_ENDPOINT_URL')
+    if not endpoint:
+        endpoint = os.getenv('SIGNALFX_TRACING_URL', 'https://ingest.signalfx.com/v1/trace')
     service_name = os.getenv('SIGNALFX_SERVICE_NAME', context.function_name)
     access_token = os.getenv('SIGNALFX_ACCESS_TOKEN', None)
 
