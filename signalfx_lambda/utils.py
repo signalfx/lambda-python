@@ -9,14 +9,11 @@ def get_fields(context):
 
     global fields
 
-    # if the context hasn't changed, we can reuse the dict instead of rebuilding it
-    if fields:
-        return fields
-
     # Expected format arn:aws:lambda:us-east-1:accountId:function:functionName:$LATEST
     splitted = function_arn.split(':')
 
     fields.update({
+        'aws_request_id': context.aws_request_id
         'aws_function_version': context.function_version,
         'aws_function_name': context.function_name,
         'aws_region': splitted[3],
