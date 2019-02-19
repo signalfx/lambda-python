@@ -2,12 +2,10 @@ import os
 
 from .version import name, version
 
-fields = {}
-
 def get_fields(context):
     function_arn = context.invoked_function_arn
 
-    global fields
+    fields = {}
 
     # Expected format arn:aws:lambda:us-east-1:accountId:function:functionName:$LATEST
     splitted = function_arn.split(':')
