@@ -1,3 +1,4 @@
+import functools
 import signalfx
 import os
 import datetime
@@ -51,6 +52,7 @@ def send_gauge(metric_name, metric_value, dimensions={}):
 
 def generate_wrapper_decorator(access_token):
     def wrapper_decorator(func):
+        @functools.wraps(func)
         def call(*args, **kwargs):
             global ingest
             # timeout for connecting = 1 and responding 0.3
