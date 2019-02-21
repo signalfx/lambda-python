@@ -19,6 +19,14 @@ To install from PyPi
 
     $ pip install signalfx_lambda
 
+Auto-Instrumentation
+~~~~~~~~~~~~~~~~~~~~
+
+If the Python auto-instrumentation libraries are available to the wrapper, the
+Lambda handler will be auto-instrumented. To install them, follow the
+:new-page:`instructions <https://github.com/signalfx/signalfx-python-tracing#installation-and-configuration>` and make sure that they are included in the
+deployment package.
+
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 

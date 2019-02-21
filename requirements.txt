@@ -1,4 +1,2 @@
 signalfx>=1.0.16
-signalfx_tracing
-signalfx-tracing[dbapi,django,flask,pymongo,pymysql,redis,requests,tornado]
 jaeger-client @ git+https://github.com/signalfx/jaeger-client-python.git@ot_20_http_sender_no_tornado#egg=jaeger-client
