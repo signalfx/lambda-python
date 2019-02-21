@@ -2,6 +2,7 @@ import functools
 import os
 import opentracing
 from jaeger_client import Config
+from signalfx_tracing import auto_instrument
 
 from . import utils
 
@@ -13,6 +14,7 @@ def wrapper(func):
         context = args[1]
 
         tracer = init_jaeger_tracer(context)
+        auto_instrument(tracer)
 
         span_tags = utils.get_fields(context)
         span_tags['component'] = 'python-lambda-wrapper'
