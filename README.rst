@@ -23,9 +23,17 @@ Auto-Instrumentation
 ~~~~~~~~~~~~~~~~~~~~
 
 If the Python auto-instrumentation libraries are available to the wrapper, the
-Lambda handler will be auto-instrumented. To install them, follow the
-:new-page:`instructions <https://github.com/signalfx/signalfx-python-tracing#installation-and-configuration>` and make sure that they are included in the
-deployment package.
+Lambda handler will be auto-instrumented.
+
+To install the supported instrumentation libraries:
+
+::
+
+    $ pip install signalfx-tracing
+
+    $ sfx-py-trace-bootstrap -t <deployment_package_path>
+
+For more information, check out the full :new-page:`instructions <https://github.com/signalfx/signalfx-python-tracing#installation-and-configuration>`.
 
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
