@@ -57,30 +57,47 @@ SIGNALFX_TRACING_URL can be used to configure a common endpoint for metrics and
 traces, as is the case when forwarding with the Smart Gateway.
 
 If either SIGNALFX_TRACING_URL or SIGNALFX_METRICS_URL are set, they will take
-precendence over SIGNALFX_TRACING_URL for their respective components.
+precendence over SIGNALFX_ENDPOINT_URL for their respective components.
+
+For example, if only SIGNALFX_ENDPOINT_URL is set:
+
+::
+
+    SIGNALFX_ENDPOINT_URL=<gateway_address>
+
+both metrics and traces will be sent to the gateway address.
+
+If SIGNALFX_ENDPOINT_URL and SIGNALFX_METRICS_URL are set:
+
+::
+    SIGNALFX_METRICS_URL=https://pops.signalfx.com
+
+    SIGNALFX_ENDPOINT_URL=<gateway_address>
+
+Traces will be sent to the gateway and metrics will go through POPS.
 
 Wrapping a function
 ~~~~~~~~~~~~~~~~~~~
 
 There are two wrappers provided.
 
-For metrics, decorate your handler with @signalfx_lambda.metrics_wrapper
+For metrics, decorate your handler with @signalfx_lambda.emit_metrics
 
 ::
 
     import signalfx_lambda
 
-    @signalfx_lambda.metrics_wrapper
+    @signalfx_lambda.emit_metrics
     def handler(event, context):
         # your code
 
-For tracing, use the @signalfx_lambda.tracing_wrapper decorator
+For tracing, use the @signalfx_lambda.is_traced decorator
 
 ::
 
     import signalfx_lambda
 
-    @signalfx_lambda.tracing_wrapper
+    @signalfx_lambda.is_traced
     def handler(event, context):
         # your code
 
@@ -204,10 +221,10 @@ Sending custom metric from the Lambda function
     # sending counter metric with no dimension
     signalfx_lambda.send_counter('database_calls', 1)
 
-Adding custom tracing to the Lambda function
+Adding manual tracing to the Lambda function
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Custom instrumentation can be added to trace critical parts of your handler
+Manual instrumentation can be added to trace critical parts of your handler
 function.
 
 ::
@@ -250,4 +267,4 @@ Packaging
 License
 ~~~~~~~
 
-Apache Software License v2. Copyright © 2014-2017 SignalFx
+Apache Software License v2. Copyright © 2014-2019 SignalFx

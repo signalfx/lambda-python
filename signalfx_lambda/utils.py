@@ -7,8 +7,6 @@ fields = {}
 def get_fields(context):
     function_arn = context.invoked_function_arn
 
-    global fields
-
     if fields.get('aws_request_id') != context.aws_request_id:
         # Expected format arn:aws:lambda:us-east-1:accountId:function:functionName:$LATEST
         splitted = function_arn.split(':')
@@ -39,3 +37,10 @@ def get_fields(context):
 
     return fields.copy()
 
+
+def get_access_token():
+    token = os.environ.get('SIGNALFX_ACCESS_TOKEN')
+    if not token:
+        token = os.environ.get('SIGNALFX_AUTH_TOKEN')
+
+    return token

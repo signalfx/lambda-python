@@ -6,8 +6,6 @@ from jaeger_client import Config
 
 from . import utils
 
-span_prefix = ''
-
 def wrapper(func):
     @functools.wraps(func)
     def call(*args, **kwargs):
@@ -23,6 +21,8 @@ def wrapper(func):
 
         span_tags = utils.get_fields(context)
         span_tags['component'] = 'python-lambda-wrapper'
+
+        span_prefix = os.getenv('SIGNALFX_SPAN_PREFIX', 'lambda_python_')
 
         try:
             with tracer.start_active_span(span_prefix + context.function_name, tags=span_tags) as scope:
@@ -40,14 +40,11 @@ def wrapper(func):
 
 
 def init_jaeger_tracer(context):
-    global span_prefix
-    span_prefix = os.getenv('SIGNALFX_SPAN_PREFIX', 'lambda_python_')
-
     endpoint = os.environ.get('SIGNALFX_TRACING_URL')
     if not endpoint:
         endpoint = os.getenv('SIGNALFX_ENDPOINT_URL', 'https://ingest.signalfx.com/v1/trace')
     service_name = os.getenv('SIGNALFX_SERVICE_NAME', context.function_name)
-    access_token = os.getenv('SIGNALFX_ACCESS_TOKEN', None)
+    access_token = utils.get_access_token()
 
     tracer_config = {
             'sampler': {

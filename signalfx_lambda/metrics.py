@@ -110,7 +110,7 @@ def generate_wrapper_decorator(access_token):
 
 
 def wrapper(*args, **kwargs):
-    access_token = os.environ.get('SIGNALFX_ACCESS_TOKEN')
+    access_token = utils.get_access_token()
     if len(args) == 1 and callable(args[0]):
         # plain wrapper with no parameter
         # call the wrapper decorator like normally would
