@@ -32,5 +32,5 @@ def send_counter(metric_name, metric_value=1, dimensions={}):
 
 # convenience method
 def send_gauge(metric_name, metric_value, dimensions={}):
-    metrics.send_counter(metric_name, metric_value, dimensions)
+    metrics.send_gauge(metric_name, metric_value, dimensions)
 

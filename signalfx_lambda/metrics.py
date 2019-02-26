@@ -6,10 +6,10 @@ import datetime
 from . import utils
 from .version import name, version
 
-ingest_end_point = utils.get_metrics_url()
+ingest_endpoint = utils.get_metrics_url()
 ingest_timeout = os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3)
 
-sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point)
+sfx = signalfx.SignalFx(ingest_endpoint=ingest_endpoint)
 
 is_cold_start = True
 
@@ -29,7 +29,7 @@ def map_datapoint(data_point):
 
 
 def map_datapoints(data_points):
-    return list(map(map_datapoint, data_points))
+    return [ map_datapoint(data_point) for data_point in data_points ]
 
 
 # less convenient method
