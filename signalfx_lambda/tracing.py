@@ -34,9 +34,7 @@ def wrapper(func):
 
 
 def init_jaeger_tracer(context):
-    endpoint = os.environ.get('SIGNALFX_TRACING_URL')
-    if not endpoint:
-        endpoint = os.getenv('SIGNALFX_ENDPOINT_URL', 'https://ingest.signalfx.com/v1/trace')
+    endpoint = utils.get_tracing_url()
     service_name = os.getenv('SIGNALFX_SERVICE_NAME', context.function_name)
     access_token = utils.get_access_token()
 

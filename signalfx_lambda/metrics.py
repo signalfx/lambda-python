@@ -7,8 +7,6 @@ from . import utils
 from .version import name, version
 
 ingest_end_point = utils.get_metrics_url()
-if not ingest_end_point:
-    ingest_end_point = os.environ.get('SIGNALFX_ENDPOINT_URL', 'https://pops.signalfx.com')
 ingest_timeout = os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3)
 
 sfx = signalfx.SignalFx(ingest_endpoint=ingest_end_point)
