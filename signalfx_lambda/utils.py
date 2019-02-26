@@ -1,4 +1,5 @@
 import os
+import warnings
 
 from .version import name, version
 
@@ -38,9 +39,20 @@ def get_fields(context):
     return fields.copy()
 
 
+def get_metrics_url():
+    url = os.environ.get('SIGNALFX_INGEST_ENDPOINT')
+    if url:
+        warnings.warn('SIGNALFX_INGEST_ENDPOINT is deprecated, use SIGNALFX_METRICS_URL instead.', DeprecationWarning)
+    else:
+        url = os.environ.get('SIGNALFX_METRICS_URL')
+
+    return url
+
+
 def get_access_token():
     token = os.environ.get('SIGNALFX_ACCESS_TOKEN')
     if not token:
+        warnings.warn('SIGNALFX_AUTH_TOKEN is deprecated, use SIGNALFX_ACCESS_TOKEN instead.', DeprecationWarning)
         token = os.environ.get('SIGNALFX_AUTH_TOKEN')
 
     return token
