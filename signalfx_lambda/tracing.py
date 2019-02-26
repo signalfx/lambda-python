@@ -13,12 +13,6 @@ def wrapper(func):
 
         tracer = init_jaeger_tracer(context)
 
-        try:
-            from signalfx_tracing import auto_instrument
-            auto_instrument(tracer)
-        except ImportError:
-            pass
-
         span_tags = utils.get_fields(context)
         span_tags['component'] = 'python-lambda-wrapper'
 
