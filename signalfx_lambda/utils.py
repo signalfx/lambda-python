@@ -54,8 +54,15 @@ def get_metrics_url():
 
 def get_tracing_url():
     url = os.environ.get('SIGNALFX_TRACING_URL')
+
     if not url:
-        url = os.environ.get('SIGNALFX_ENDPOINT_URL', 'https://ingest.signalfx.com/v1/trace')
+        url = os.environ.get('SIGNALFX_ENDPOINT_URL')
+
+        if url:
+            # if the common endpoint url is used, we need to append the trace path
+            url = url + '/v1/trace'
+        else:
+            url = 'https://ingest.signalfx.com/v1/trace'
 
     return url
 
