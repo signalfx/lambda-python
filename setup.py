@@ -29,5 +29,5 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
-    url='https://github.com/signalfx/python-lambda',
+    url='https://github.com/signalfx/lambda-python',
 )
