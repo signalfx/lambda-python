@@ -57,6 +57,7 @@ both metrics and traces will be sent to the gateway address.
 If SIGNALFX_ENDPOINT_URL and SIGNALFX_METRICS_URL are set:
 
 ::
+
     SIGNALFX_METRICS_URL=https://pops.signalfx.com
 
     SIGNALFX_ENDPOINT_URL=<gateway_address>
