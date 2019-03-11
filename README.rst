@@ -226,7 +226,7 @@ function.
             span.set_tag("example_tag", "example_value")
 
 More examples and usage information can be found in the Jaeger Python Tracer
-:new-page:`documentation <https://github.com/signalfx/jaeger-client-python>`.
+`documentation <https://github.com/signalfx/jaeger-client-python>`_.
 
 Testing it out locally
 ~~~~~~~~~~~~~~~~~~~~~~
