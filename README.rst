@@ -39,8 +39,9 @@ Environment Variables
 
     SIGNALFX_TRACING_URL=tracing endpoint [ default: https://ingest.signalfx.com/v1/trace ]
 
-SIGNALFX_TRACING_URL can be used to configure a common endpoint for metrics and
-traces, as is the case when forwarding with the Smart Gateway.
+SIGNALFX_ENDPOINT_URL can be used to configure a common endpoint for metrics and
+traces, as is the case when forwarding with the Smart Gateway. The path :code:`/v1/traces`
+will automatically be added to the endpoint for traces.
 
 If either SIGNALFX_TRACING_URL or SIGNALFX_METRICS_URL are set, they will take
 precendence over SIGNALFX_ENDPOINT_URL for their respective components.
