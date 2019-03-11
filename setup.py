@@ -21,6 +21,7 @@ setup(
     description='SignalFx Lambda Python Wrapper',
     license='Apache Software License v2',
     long_description=long_description,
+    long_description_content_type='text/x-rst',
     zip_safe=True,
     packages=find_packages(),
     install_requires=requirements,
@@ -28,5 +29,5 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
-    url='https://github.com/signalfx/python-lambda',
+    url='https://github.com/signalfx/lambda-python',
 )

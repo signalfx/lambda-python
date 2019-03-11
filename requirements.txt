@@ -1,1 +1,2 @@
 signalfx>=1.0.16
+jaeger-client @ git+https://github.com/signalfx/jaeger-client-python.git@ot_20_http_sender_no_tornado#egg=jaeger-client
