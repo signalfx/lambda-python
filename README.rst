@@ -22,6 +22,8 @@ To install from PyPi
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
+**Note: the environment variables SIGNALFX_INGEST_ENDPOINT and SIGNALFX_AUTH_TOKEN are being deprecated and will not be supported in future releases.**
+
 ::
 
     SIGNALFX_ACCESS_TOKEN=access token
