@@ -19,6 +19,16 @@ To install from PyPi
 
     $ pip install signalfx_lambda
 
+Configuring the ingest endpoint
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, this function wrapper will send to the `us0` realm. If you are
+not in this realm you will need to set the `SIGNALFX_INGEST_ENDPOINT` environment
+variable to the correct realm ingest endpoint (https://ingest.{REALM}.signalfx.com).
+To determine what realm you are in, check your profile page in the SignalFx
+web application (click the avatar in the upper right and click My Profile).
+
+
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
