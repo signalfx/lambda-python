@@ -54,6 +54,7 @@ def init_jaeger_tracer(context):
 
     config = Config(config=tracer_config, service_name=service_name)
 
-    tracer = config.initialize_tracer()
+    tracer = config.new_tracer()
+    opentracing.tracer = tracer
 
     return tracer
