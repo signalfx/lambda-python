@@ -79,13 +79,13 @@ Wrapping a function
 
 There are two wrappers provided.
 
-For metrics, decorate your handler with @signalfx_lambda.emit_metrics
+For metrics, decorate your handler with @signalfx_lambda.emits_metrics
 
 ::
 
     import signalfx_lambda
 
-    @signalfx_lambda.emit_metrics
+    @signalfx_lambda.emits_metrics
     def handler(event, context):
         # your code
 
