@@ -1,6 +1,7 @@
 import functools
 import os
 import opentracing
+from opentracing.ext import tags as ext_tags
 import pip
 from jaeger_client import Config
 
@@ -15,6 +16,7 @@ def wrapper(func):
 
         span_tags = utils.get_fields(context)
         span_tags['component'] = 'python-lambda-wrapper'
+        span_tags[ext_tags.SPAN_KIND] = ext_tags.SPAN_KIND_RPC_SERVER
 
         span_prefix = os.getenv('SIGNALFX_SPAN_PREFIX', 'lambda_python_')
 
