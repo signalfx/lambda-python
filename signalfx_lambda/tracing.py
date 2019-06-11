@@ -2,7 +2,6 @@ import functools
 import os
 import opentracing
 from opentracing.ext import tags as ext_tags
-import pip
 from jaeger_client import Config
 
 from . import utils
