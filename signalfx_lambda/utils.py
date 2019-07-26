@@ -3,14 +3,12 @@ import warnings
 
 from .version import name, version
 
-fields = {}
-
 def get_fields(context):
+    fields = {}
     function_arn = context.invoked_function_arn
 
     # Expected format arn:aws:lambda:us-east-1:accountId:function:functionName:$LATEST
     splitted = function_arn.split(':')
-
     fields.update({
         'aws_function_version': context.function_version,
         'aws_function_name': context.function_name,
@@ -35,15 +33,16 @@ def get_fields(context):
         fields['event_source_mappings'] = splitted[6]
         fields['lambda_arn'] = function_arn
 
-    return fields.copy()
+    return fields
 
-def get_tracing_fields():
+def get_tracing_fields(context):
+    fields = get_fields(context)
     if fields.get('aws_request_id') != context.aws_request_id:
         fields.update({
             'aws_request_id': context.aws_request_id
         })
 
-    return get_fields()
+    return fields
 
 
 def get_metrics_url():
