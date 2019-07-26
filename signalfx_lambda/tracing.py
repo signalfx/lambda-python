@@ -13,7 +13,7 @@ def wrapper(func):
 
         tracer = init_jaeger_tracer(context)
 
-        span_tags = utils.get_fields(context)
+        span_tags = utils.get_tracing_fields(context)
         span_tags['component'] = 'python-lambda-wrapper'
         span_tags[ext_tags.SPAN_KIND] = ext_tags.SPAN_KIND_RPC_SERVER
 
