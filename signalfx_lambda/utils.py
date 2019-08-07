@@ -1,5 +1,6 @@
 import os
 import warnings
+import six.moves.urllib.parse as urlparse
 
 from .version import name, version
 
@@ -60,17 +61,11 @@ def get_metrics_url():
 
 def get_tracing_url():
     url = os.environ.get('SIGNALFX_TRACING_URL')
+    if url:
+        return url
 
-    if not url:
-        url = os.environ.get('SIGNALFX_ENDPOINT_URL')
-
-        if url:
-            # if the common endpoint url is used, we need to append the trace path
-            url = url + '/v1/trace'
-        else:
-            url = 'https://ingest.signalfx.com/v1/trace'
-
-    return url
+    url = os.environ.get('SIGNALFX_ENDPOINT_URL', 'https://ingest.signalfx.com')
+    return urlparse.urljoin(url, '/v1/trace')
 
 
 def get_access_token():

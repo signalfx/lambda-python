@@ -40,7 +40,7 @@ Environment Variables
 
     # endpoint for both metrics and tracer. Overridden by SIGNALFX_METRICS_URL
     # and SIGNALFX_TRACING_URL if set
-    SIGNALFX_ENDPOINT_URL=endpoint url
+    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
 
     # optional metrics and tracing configuration
 
@@ -60,7 +60,7 @@ For example, if only SIGNALFX_ENDPOINT_URL is set:
 
 ::
 
-    SIGNALFX_ENDPOINT_URL=<gateway_address>
+    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
 
 both metrics and traces will be sent to the gateway address.
 
@@ -70,7 +70,7 @@ If SIGNALFX_ENDPOINT_URL and SIGNALFX_METRICS_URL are set:
 
     SIGNALFX_METRICS_URL=https://pops.signalfx.com
 
-    SIGNALFX_ENDPOINT_URL=<gateway_address>
+    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
 
 Traces will be sent to the gateway and metrics will go through POPS.
 
