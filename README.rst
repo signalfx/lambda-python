@@ -15,16 +15,16 @@ Installation
 
 To install from PyPi
 
-::
+.. code::
 
-    $ pip install signalfx_lambda
+    pip install signalfx_lambda
 
 Configuring the ingest endpoint
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, this function wrapper will send to the `us0` realm. If you are
-not in this realm you will need to set the `SIGNALFX_INGEST_ENDPOINT` environment
-variable to the correct realm ingest endpoint (https://ingest.{REALM}.signalfx.com).
+By default, this function wrapper will send to the ``us0`` realm. If you are
+not in this realm you will need to set the ``SIGNALFX_INGEST_ENDPOINT`` environment
+variable to the correct realm ingest endpoint (``https://ingest.{REALM}.signalfx.com``).
 To determine what realm you are in, check your profile page in the SignalFx
 web application (click the avatar in the upper right and click My Profile).
 
@@ -32,9 +32,9 @@ web application (click the avatar in the upper right and click My Profile).
 Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
-**Note: the environment variables SIGNALFX_INGEST_ENDPOINT and SIGNALFX_AUTH_TOKEN are being deprecated and will not be supported in future releases.**
+**Note: the environment variables ``SIGNALFX_INGEST_ENDPOINT`` and ``SIGNALFX_AUTH_TOKEN`` are being deprecated and will not be supported in future releases.**
 
-::
+.. code:: bash
 
     SIGNALFX_ACCESS_TOKEN=access token
 
@@ -49,27 +49,26 @@ Environment Variables
 
     SIGNALFX_TRACING_URL=tracing endpoint [ default: https://ingest.signalfx.com/v1/trace ]
 
-SIGNALFX_ENDPOINT_URL can be used to configure a common endpoint for metrics and
-traces, as is the case when forwarding with the Smart Gateway. The path :code:`/v1/traces`
+``SIGNALFX_ENDPOINT_URL`` can be used to configure a common endpoint for metrics and
+traces, as is the case when forwarding with the Smart Gateway. The path ``/v1/traces``
 will automatically be added to the endpoint for traces.
 
-If either SIGNALFX_TRACING_URL or SIGNALFX_METRICS_URL are set, they will take
-precendence over SIGNALFX_ENDPOINT_URL for their respective components.
+If either ``SIGNALFX_TRACING_URL`` or ``SIGNALFX_METRICS_URL`` are set, they will take
+precendence over ``SIGNALFX_ENDPOINT_URL`` for their respective components.
 
-For example, if only SIGNALFX_ENDPOINT_URL is set:
+For example, if only ``SIGNALFX_ENDPOINT_URL`` is set:
 
-::
+.. code:: bash
 
     SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
 
-both metrics and traces will be sent to the gateway address.
+Both metrics and traces will be sent to the gateway address.
 
-If SIGNALFX_ENDPOINT_URL and SIGNALFX_METRICS_URL are set:
+If ``SIGNALFX_ENDPOINT_URL`` and ``SIGNALFX_METRICS_URL`` are set:
 
-::
+.. code:: bash
 
     SIGNALFX_METRICS_URL=https://pops.signalfx.com
-
     SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
 
 Traces will be sent to the gateway and metrics will go through POPS.
@@ -81,7 +80,7 @@ There are two wrappers provided.
 
 For metrics, decorate your handler with @signalfx_lambda.emits_metrics
 
-::
+.. code:: python
 
     import signalfx_lambda
 
@@ -91,7 +90,7 @@ For metrics, decorate your handler with @signalfx_lambda.emits_metrics
 
 For tracing, use the @signalfx_lambda.is_traced decorator
 
-::
+.. code:: python
 
     import signalfx_lambda
 
@@ -207,7 +206,7 @@ The tracing wrapper creates a span for the wrapper handler. This span has the fo
 Sending custom metric from the Lambda function
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+.. code:: python
 
     import signalfx_lambda
 
@@ -223,7 +222,7 @@ Adding manual tracing to the Lambda function
 Manual instrumentation can be added to trace critical parts of your handler
 function.
 
-::
+.. code:: python
 
     import opentracing
 
@@ -245,18 +244,18 @@ Testing it out locally
 
 Use python-lambda-local
 
-::
+.. code::
 
     pip install python-lambda-local
 
-::
+.. code::
 
     python-lambda-local tests/test.py tests/event.json -a 'arn:aws:lambda:us-east-1:accountId:function:functionNamePython:$LATEST'
 
 Packaging
 ~~~~~~~~~
 
-::
+.. code::
 
     python setup.py bdist_wheel --universal
 
