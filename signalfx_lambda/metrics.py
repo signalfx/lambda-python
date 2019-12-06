@@ -123,8 +123,14 @@ def wrapper(*args, **kwargs):
             default_dimensions.update(dimensions)
 
         token = kwargs.get('access_token')
-        if isinstance(token, basestring):
+        if isstr(token):
             access_token = token
 
         return generate_wrapper_decorator(access_token)
 
+def isstr(s):
+    try:
+        basestring
+    except NameError:
+        basestring = str
+    return isinstance(s, basestring)
