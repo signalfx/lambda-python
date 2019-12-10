@@ -2,12 +2,13 @@ import functools
 import signalfx
 import os
 import datetime
+import six
 
 from . import utils
 from .version import name, version
 
 ingest_endpoint = utils.get_metrics_url()
-ingest_timeout = os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3)
+ingest_timeout = float(os.environ.get('SIGNALFX_SEND_TIMEOUT', 0.3))
 
 sfx = signalfx.SignalFx(ingest_endpoint=ingest_endpoint)
 
@@ -123,14 +124,7 @@ def wrapper(*args, **kwargs):
             default_dimensions.update(dimensions)
 
         token = kwargs.get('access_token')
-        if isstr(token):
+        if isinstance(token, six.string_types):
             access_token = token
 
         return generate_wrapper_decorator(access_token)
-
-def isstr(s):
-    try:
-        basestring
-    except NameError:
-        basestring = str
-    return isinstance(s, basestring)
