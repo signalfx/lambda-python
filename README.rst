@@ -6,16 +6,15 @@ Overview
 
 You can use this document to add a SignalFx wrapper to AWS Lamba Layers, specifically for Python. 
 
-The SignalFx Python Lambda Wrapper is a wrapper around an AWS Lambda Python function handler, which can be used to instrument execution of the function and send metrics and traces to SignalFx.
-
+You can use the SignalFx Python Lambda Wrapper to wrap around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
 
 
 Before you begin
 ~~~~~~~~~~~~~~~~~
 
-* To review a list of supported regions and versions, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
+- To review a list of supported regions and versions, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
-* 
+- 
 
 
 Later 
@@ -41,10 +40,10 @@ Step 1: Add the Lamba wrapper in AWS
 .. code:: pip install signalfx_lambda 
 
 
-To add a wrapper, there are two options. You can add a wrapper via 
+To add a wrapper, you can create your own wrapper or use a wrapper generated from SignalFx. Review the correct option below. 
 
 
-**Option 1: Create and add your own wrapper
+*Option 1: Create and add your own wrapper 
 
 1. Access your AWS console. 
 2. In the landing page, under **Compute**, click **Lamba**.
@@ -54,14 +53,12 @@ To add a wrapper, there are two options. You can add a wrapper via 
 6. In **Runtime**, select the desired language.
 7. Click **Create function**. 
 8. Click on **Layers**, then add a layer.
-9. Mark Provide a layer version.
-10. Enter an ARN number (We need to create a readme file in GitHub that will get automatically updated because the end of the number contains a version number. We can have one link (document) with all the ARN numbers for the supported languages.)
+9. Mark **Provide a layer version**.
+10. Enter an ARN number. 
+    * To locate the ARN number, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
 
-
-
-
-**Option 2: Add a template wrapper from SignalFx 
+**Option 2: Add a wrapper from a SignalFx template 
 
 Here, the user will chose a template and then deploy the copy into their own account:
 
@@ -70,11 +67,10 @@ Here, the user will chose a template and then deploy the copy into their own acc
 3. Click **Create function** to create a layer with SignalFx's capabilities.
 4. Click **Browse serverless app repository**.
 5. Click **Public applications**.
-6. Enter the name of the layer (we are still waiting for the official name).
-7. Review the template, permissions, licenses, and then click **Deploy**. The copy of the layer will now be deployed in your account.
-8. Return to the previous screen to add a layer to the fucntion, then select from list of runtime compatible layers, and select the name of the copy.  
-
-
+6. In the search field, enter **the official name**. 
+7. Review the template, permissions, licenses, and then click **Deploy**. 
+    * A copy of the layer will now be deployed in your account.
+8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
 
 
 Step 2: Configure the ingest endpoint
@@ -140,6 +136,8 @@ Step 4: Wrap a function
 
 There are two wrappers provided.
 
+The decorators can be used individually or together.
+
 1. For metrics, decorate your handler with @signalfx_lambda.emits_metrics
 
 .. code:: python
@@ -160,7 +158,6 @@ There are two wrappers provided.
     def handler(event, context):
         # your code
 
-The decorators can be used individually or together.
 
 Step 5: Review the metrics and dimensions sent by the metrics wrapper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
