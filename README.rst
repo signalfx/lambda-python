@@ -4,46 +4,29 @@ SignalFx Python Lambda Wrapper
 Overview
 ---------
 
-You can use this document to add a SignalFx wrapper to AWS Lamba Layers, specifically for Python. 
+You can use this document to add a SignalFx wrapper to your AWS Lamba Layers, specifically for Python. 
 
-You can use the SignalFx Python Lambda Wrapper to wrap around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
+The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
 
 
 Before you begin
 ~~~~~~~~~~~~~~~~~
 
-- To review a list of supported regions and versions, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
-
-- 
-
-
-Later 
-
-Similarly, to skip the installation step, you can attach the resulting layer to your Lambda function. To learn more, see 
-
-The installation step can be replaced by attaching the resulting layer to your Lambda function.
-
-For more information on attaching a layer to a Lambda see AWS documentation.
-
-
-
-To report metrics and traces to SignalFx, see the extract below or follow the wrapper's README. The installation step can be replaced by attaching the resulting layer to your Lambda function.
-
-
+Review a list of supported regions and versions. See [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
 
 Step 1: Add the Lamba wrapper in AWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note::  These instructions require that you access your AWS account. If you prefer, you can simply run the installation script in your command line. Afterwards, you can skip to Step 2. 
+To add a wrapper, you have the following options: 
+   * Create your own wrapper in AWS
+   * Implement a SignalFx-generated wrapper in AWS
+   * Run an installation script in your command line
+   
+Review the correct option below. 
 
-.. code:: pip install signalfx_lambda 
 
-
-To add a wrapper, you can create your own wrapper or use a wrapper generated from SignalFx. Review the correct option below. 
-
-
-*Option 1: Create and add your own wrapper 
+**Option 1: Create and add your own wrapper** 
 
 1. Access your AWS console. 
 2. In the landing page, under **Compute**, click **Lamba**.
@@ -58,7 +41,7 @@ To add a wrapper, you can create your own wrapper or use a wrapper generated fro
     * To locate the ARN number, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
 
-**Option 2: Add a wrapper from a SignalFx template 
+**Option 2: Add a wrapper from a SignalFx template** 
 
 Here, the user will chose a template and then deploy the copy into their own account:
 
@@ -71,6 +54,14 @@ Here, the user will chose a template and then deploy the copy into their own acc
 7. Review the template, permissions, licenses, and then click **Deploy**. 
     * A copy of the layer will now be deployed in your account.
 8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
+
+**Option 3: Run an installation script**
+
+If you do not want to access your AWS account, you can instead run the following installation script in your command line: 
+
+.. code::
+
+    pip install signalfx_lambda
 
 
 Step 2: Configure the ingest endpoint
