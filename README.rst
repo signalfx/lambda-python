@@ -1,36 +1,98 @@
 SignalFx Python Lambda Wrapper
 ==============================
 
-SignalFx Python Lambda Wrapper.
+Overview
+---------
 
-Usage
------
+You can use this document to add a SignalFx wrapper to AWS Lamba Layers, specifically for Python. 
 
-The SignalFx Python Lambda Wrapper is a wrapper around an AWS Lambda
-Python function handler, used to instrument execution of the function
-and send metrics and traces to SignalFx.
-
-Installation
-~~~~~~~~~~~~
-
-To install from PyPi
-
-.. code::
-
-    pip install signalfx_lambda
-
-Configuring the ingest endpoint
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-By default, this function wrapper will send to the ``us0`` realm. If you are
-not in this realm you will need to set the ``SIGNALFX_INGEST_ENDPOINT`` environment
-variable to the correct realm ingest endpoint (``https://ingest.{REALM}.signalfx.com``).
-To determine what realm you are in, check your profile page in the SignalFx
-web application (click the avatar in the upper right and click My Profile).
+The SignalFx Python Lambda Wrapper is a wrapper around an AWS Lambda Python function handler, which can be used to instrument execution of the function and send metrics and traces to SignalFx.
 
 
-Environment Variables
-~~~~~~~~~~~~~~~~~~~~~
+
+Before you begin
+~~~~~~~~~~~~~~~~~
+
+* To review a list of supported regions and versions, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
+
+* 
+
+
+Later 
+
+Similarly, to skip the installation step, you can attach the resulting layer to your Lambda function. To learn more, see 
+
+The installation step can be replaced by attaching the resulting layer to your Lambda function.
+
+For more information on attaching a layer to a Lambda see AWS documentation.
+
+
+
+To report metrics and traces to SignalFx, see the extract below or follow the wrapper's README. The installation step can be replaced by attaching the resulting layer to your Lambda function.
+
+
+
+
+Step 1: Add the Lamba wrapper in AWS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::  These instructions require that you access your AWS account. If you prefer, you can simply run the installation script in your command line. Afterwards, you can skip to Step 2. 
+
+.. code:: pip install signalfx_lambda 
+
+
+To add a wrapper, there are two options. You can add a wrapper via 
+
+
+**Option 1: Create and add your own wrapper
+
+1. Access your AWS console. 
+2. In the landing page, under **Compute**, click **Lamba**.
+3. Click **Create function** to create a layer with SignalFx's capabilities.
+4. Click **Author from scratch**.
+5. In **Function name**, enter a descriptive name for the wrapper. 
+6. In **Runtime**, select the desired language.
+7. Click **Create function**. 
+8. Click on **Layers**, then add a layer.
+9. Mark Provide a layer version.
+10. Enter an ARN number (We need to create a readme file in GitHub that will get automatically updated because the end of the number contains a version number. We can have one link (document) with all the ARN numbers for the supported languages.)
+
+
+
+
+
+**Option 2: Add a template wrapper from SignalFx 
+
+Here, the user will chose a template and then deploy the copy into their own account:
+
+1. Access your AWS console. 
+2. In the landing page, under **Compute**, click **Lamba**.
+3. Click **Create function** to create a layer with SignalFx's capabilities.
+4. Click **Browse serverless app repository**.
+5. Click **Public applications**.
+6. Enter the name of the layer (we are still waiting for the official name).
+7. Review the template, permissions, licenses, and then click **Deploy**. The copy of the layer will now be deployed in your account.
+8. Return to the previous screen to add a layer to the fucntion, then select from list of runtime compatible layers, and select the name of the copy.  
+
+
+
+
+Step 2: Configure the ingest endpoint
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, this function wrapper will send data to the ``us0`` realm. 
+
+If you are not in this realm, you will need to set the ``SIGNALFX_INGEST_ENDPOINT`` environment variable to the correct realm ingest endpoint (``https://ingest.{REALM}.signalfx.com``).
+
+To locate your realm:
+
+1. In SignalFx, in the top, right corner, click your profile icon.
+2. Click **My Profile**.
+3. Next to **Organizations**, review the listed realm.
+
+
+Step 3: Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Note: the environment variables ``SIGNALFX_INGEST_ENDPOINT`` and ``SIGNALFX_AUTH_TOKEN`` are being deprecated and will not be supported in future releases.**
 
@@ -73,12 +135,12 @@ If ``SIGNALFX_ENDPOINT_URL`` and ``SIGNALFX_METRICS_URL`` are set:
 
 Traces will be sent to the gateway and metrics will go through POPS.
 
-Wrapping a function
-~~~~~~~~~~~~~~~~~~~
+Step 4: Wrap a function
+~~~~~~~~~~~~~~~~~~~~~~~~~`
 
 There are two wrappers provided.
 
-For metrics, decorate your handler with @signalfx_lambda.emits_metrics
+1. For metrics, decorate your handler with @signalfx_lambda.emits_metrics
 
 .. code:: python
 
@@ -88,7 +150,7 @@ For metrics, decorate your handler with @signalfx_lambda.emits_metrics
     def handler(event, context):
         # your code
 
-For tracing, use the @signalfx_lambda.is_traced decorator
+2. For tracing, use the @signalfx_lambda.is_traced decorator
 
 .. code:: python
 
@@ -100,8 +162,8 @@ For tracing, use the @signalfx_lambda.is_traced decorator
 
 The decorators can be used individually or together.
 
-Metrics and dimensions sent by the metrics wrapper
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 5: Review the metrics and dimensions sent by the metrics wrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Lambda wrapper sends the following metrics to SignalFx:
 
@@ -162,8 +224,8 @@ to SignalFx:
 |                                  | ‘lambda_wrapper’                 |
 +----------------------------------+----------------------------------+
 
-Traces and tags sent by the Tracing wrapper
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 6: Review the traces and tags sent by the Tracing wrapper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The tracing wrapper creates a span for the wrapper handler. This span has the following tags:
 
@@ -203,8 +265,8 @@ The tracing wrapper creates a span for the wrapper handler. This span has the fo
 |                                  | ‘python-lambda-wrapper’          |
 +----------------------------------+----------------------------------+
 
-Sending custom metric from the Lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 7: Send custom metrics from the Lambda function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
@@ -216,8 +278,8 @@ Sending custom metric from the Lambda function
     # sending counter metric with no dimension
     signalfx_lambda.send_counter('database_calls', 1)
 
-Adding manual tracing to the Lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 8: Add manual tracing to the Lambda function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Manual instrumentation can be added to trace critical parts of your handler
 function.
@@ -239,8 +301,8 @@ function.
 More examples and usage information can be found in the Jaeger Python Tracer
 `documentation <https://github.com/signalfx/jaeger-client-python>`_.
 
-Testing it out locally
-~~~~~~~~~~~~~~~~~~~~~~
+Step 9: Test configurations locally 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use python-lambda-local
 
