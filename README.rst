@@ -8,56 +8,58 @@ You can use this document to add a SignalFx wrapper to your AWS Lamba Layers, sp
 
 The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
 
+At a high-level, to add a SignalFx python lambda wrapper, you must access your AWS console to add a library to a layer, and then attach the layer to a Lambda function. 
 
-Before you begin
-~~~~~~~~~~~~~~~~~
-
-Review a list of supported regions and versions. See [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
-
+As another installation option, instead of accessing your AWS console to update your Lamda function's configurations, you can run an installation script to install SignalFx's Lambda functions to your account. 
 
 Step 1: Add the Lamba wrapper in AWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add a wrapper, you have the following options: 
-   * Create your own wrapper in AWS
-   * Implement a SignalFx-generated wrapper in AWS
-   * Run an installation script in your command line
+To add the SignalFx wrapper, you have the following options: 
+   * In AWS, create a Lambda function, then attach a SignalFx-hosted layer. 
+   * In AWS, create a Lambda function, then create and attach a layer based on a SignalFx template. 
+   * In a command line, package a dependency, add to an archive, and then create a Lambda function. 
    
-Review the correct option below. 
+Review the appropriate option below. 
 
+**Option 1: Create a Lambda function, then attach the SignalFx-hosted layer** 
 
-**Option 1: Create and add your own wrapper** 
+In this option, you will use a layer created and hosted by SignalFx.
 
-1. Access your AWS console. 
-2. In the landing page, under **Compute**, click **Lamba**.
-3. Click **Create function** to create a layer with SignalFx's capabilities.
-4. Click **Author from scratch**.
-5. In **Function name**, enter a descriptive name for the wrapper. 
-6. In **Runtime**, select the desired language.
-7. Click **Create function**. 
-8. Click on **Layers**, then add a layer.
-9. Mark **Provide a layer version**.
-10. Enter an ARN number. 
+1. To verify compatibility, review the list of supported regions. See [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
+2. Access your AWS console. 
+3. In the landing page, under **Compute**, click **Lamba**.
+4. Click **Create function** to create a layer with SignalFx's capabilities.
+5. Click **Author from scratch**.
+6. In **Function name**, enter a descriptive name for the wrapper. 
+7. In **Runtime**, select the desired language.
+8. Click **Create function**. 
+9. Click on **Layers**, then add a layer.
+10. Mark **Provide a layer version**.
+11. Enter an ARN number. 
     * To locate the ARN number, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
 
-**Option 2: Add a wrapper from a SignalFx template** 
+**Option 2: Create a Lambda function, then create and attach a layer based on a SignalFx template** 
+
+In this option, you will create and deploy a copy of a layer based on a SignalFx template.
 
 Here, the user will chose a template and then deploy the copy into their own account:
 
-1. Access your AWS console. 
-2. In the landing page, under **Compute**, click **Lamba**.
-3. Click **Create function** to create a layer with SignalFx's capabilities.
-4. Click **Browse serverless app repository**.
-5. Click **Public applications**.
-6. In the search field, enter **the official name**. 
-7. Review the template, permissions, licenses, and then click **Deploy**. 
+1. To verify compatibility, review the list of supported regions. See [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
+2. Access your AWS console. 
+3. In the landing page, under **Compute**, click **Lamba**.
+4. Click **Create function** to create a layer with SignalFx's capabilities.
+5. Click **Browse serverless app repository**.
+6. Click **Public applications**.
+7. In the search field, enter and select **signalfx-lambda-python-wrapper**. 
+8. Review the template, permissions, licenses, and then click **Deploy**. 
     * A copy of the layer will now be deployed in your account.
-8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
+9. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
 
-**Option 3: Run an installation script**
+**Option 3: Package a dependency, add to an archive, and then create a Lambda function via the command line**
 
-If you do not want to access your AWS account, you can instead run the following installation script in your command line: 
+To begin, run the following installation script in your command line: 
 
 .. code::
 
