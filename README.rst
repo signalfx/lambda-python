@@ -4,33 +4,41 @@ SignalFx Python Lambda Wrapper
 Overview
 ---------
 
-You can use this document to add a SignalFx wrapper to your AWS Lamba Layers, specifically for Python. 
+You can use this document to add a SignalFx wrapper to your AWS Lambda, specifically for Python. 
 
 The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
 
-At a high-level, to add a SignalFx python lambda wrapper, you must access your AWS console to add a library to a layer, and then attach the layer to a Lambda function. 
-
-As another installation option, instead of accessing your AWS console to update your Lamda function's configurations, you can run an installation script to install SignalFx's Lambda functions to your account. 
+At a high-level, to add a SignalFx python lambda wrapper, you can either package it yourself or you can use a Lambda layer containing the wrapper, and then attach the layer to a Lambda function.
 
 ~~~~~
 
-Step 1: Add the Lamba wrapper in AWS
+Step 1: Add the Lambda wrapper in AWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add the SignalFx wrapper, you have the following options: 
-   * In AWS, create a Lambda function, then attach a SignalFx-hosted layer. 
-   * In AWS, create a Lambda function, then create and attach a layer based on a SignalFx template. 
-   * In a command line, package a dependency, add to an archive, and then create a Lambda function. 
-   
-Review the appropriate option below. 
+To add the SignalFx wrapper, you have the following options:
+   * Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.
+   * In AWS, create a Lambda function, then attach a SignalFx-hosted layer with a wrapper.
+   * In AWS, create a Lambda function, then create and attach a layer based on a SignalFx SAM (Serverless Application Model) template.
 
-**Option 1: Create a Lambda function, then attach the SignalFx-hosted layer** 
+Review the appropriate option below.
+
+**Option 1: Install the wrapper**
+
+To begin, run the following installation script in your command line:
+
+.. code::
+
+    pip install signalfx_lambda
+
+~~~~~
+
+**Option 2: Create a Lambda function, then attach the SignalFx-hosted layer**
 
 In this option, you will use a layer created and hosted by SignalFx.
 
-1. To verify compatibility, review the list of supported regions. See [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
+1. To verify compatibility, review the list of supported regions. See [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 2. Access your AWS console. 
-3. In the landing page, under **Compute**, click **Lamba**.
+3. In the landing page, under **Compute**, click **Lambda**.
 4. Click **Create function** to create a layer with SignalFx's capabilities.
 5. Click **Author from scratch**.
 6. In **Function name**, enter a descriptive name for the wrapper. 
@@ -39,46 +47,36 @@ In this option, you will use a layer created and hosted by SignalFx.
 9. Click on **Layers**, then add a layer.
 10. Mark **Provide a layer version**.
 11. Enter an ARN number. 
-    * To locate the ARN number, see [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
+    * To locate the ARN number, see [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
 ~~~~~
 
-**Option 2: Create a Lambda function, then create and attach a layer based on a SignalFx template** 
+**Option 3: Create a Lambda function, then create and attach a layer based on a SignalFx template**
 
 In this option, you will create and deploy a copy of a layer based on a SignalFx template.
 
 Here, the user will chose a template and then deploy the copy into their own account:
 
-1. To verify compatibility, review the list of supported regions. See [Lamba Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
-2. Access your AWS console. 
-3. In the landing page, under **Compute**, click **Lamba**.
-4. Click **Create function** to create a layer with SignalFx's capabilities.
-5. Click **Browse serverless app repository**.
-6. Click **Public applications**.
-7. In the search field, enter and select **signalfx-lambda-python-wrapper**. 
-8. Review the template, permissions, licenses, and then click **Deploy**. 
+1. Access your AWS console. 
+2. In the landing page, under **Compute**, click **Lambda**.
+3. Click **Create function** to create a layer with SignalFx's capabilities.
+4. Click **Browse serverless app repository**.
+5. Click **Public applications**.
+6. In the search field, enter and select **signalfx-lambda-python-wrapper**.
+7. Review the template, permissions, licenses, and then click **Deploy**.
     * A copy of the layer will now be deployed in your account.
-9. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
-
-~~~~~
-
-**Option 3: Package a dependency, add to an archive, and then create a Lambda function via the command line**
-
-To begin, run the following installation script in your command line: 
-
-.. code::
-
-    pip install signalfx_lambda
+8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
 
 
 ~~~~~
 
-Step 2: Configure the ingest endpoint
+Step 2: Configure the SignalFx realm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, this function wrapper will send data to the ``us0`` realm. 
+By default, this function wrapper will send data to the ``us0`` realm.
+If you are not in this realm, and you are not using the gateway, you will need to use the realm specific SignalFx subdomain: {REALM}.signalfx.com (for example, us1.signalfx.com).
 
-If you are not in this realm, you will need to set the ``SIGNALFX_INGEST_ENDPOINT`` environment variable to the correct realm ingest endpoint (``https://ingest.{REALM}.signalfx.com``).
+Make sure to adjust the variables you set (any of ``SIGNALFX_ENDPOINT_URL``, ``SIGNALFX_TRACING_URL``, ``SIGNALFX_METRICS_URL``, ``SIGNALFX_INGEST_ENDPOINT``) to the correct realm ingest endpoint (``https://ingest.{REALM}.signalfx.com``).
 
 To locate your realm:
 
