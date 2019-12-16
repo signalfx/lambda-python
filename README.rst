@@ -1,5 +1,5 @@
 SignalFx Python Lambda Wrapper
-==============================
+===============================
 
 Overview
 ---------
@@ -10,10 +10,9 @@ The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function ha
 
 At a high-level, to add a SignalFx python lambda wrapper, you can either package it yourself or you can use a Lambda layer containing the wrapper, and then attach the layer to a Lambda function.
 
-~~~~~
 
 Step 1: Add the Lambda wrapper in AWS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 To add the SignalFx wrapper, you have the following options:
    * Option 1: Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.
@@ -22,7 +21,8 @@ To add the SignalFx wrapper, you have the following options:
 
 Review the appropriate option below.
 
-**Option 1: Install the wrapper**
+Option 1: Install the wrapper
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Run the following installation script in your command line:
 
@@ -30,9 +30,9 @@ Run the following installation script in your command line:
 
     pip install signalfx_lambda
 
-~~~~~
 
-**Option 2: Create a Lambda function, then attach the SignalFx-hosted layer**
+Option 2: Create a Lambda function, then attach the SignalFx-hosted layer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this option, you will use a layer created and hosted by SignalFx.
 
@@ -49,9 +49,9 @@ In this option, you will use a layer created and hosted by SignalFx.
 11. Enter an ARN number. 
   * To locate the ARN number, see [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
-~~~~~
 
-**Option 3: Create a Lambda function, then create and attach a layer based on a SignalFx template**
+Option 3: Create a Lambda function, then create and attach a layer based on a SignalFx template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this option, you will chose a SignalFx template, and then deploy a copy of the layer.
 
@@ -66,12 +66,11 @@ In this option, you will chose a SignalFx template, and then deploy a copy of th
 8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
 
 
-~~~~~
+Step 2: Locate and set the ingest endpoint
+-------------------------------------------
+By default, this function wrapper will send data to the us0 realm. If you are not in us0 realm and you want to use the ingest endpoint directly, then you muset set your realm. 
 
-Step 2: Update the SignalFx realm
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-By default, this function wrapper will send data to the ``us0`` realm. If you are not in this realm, and you are not using the gateway, then you will need to update the realm for the SignalFx subdomain, such as us1.signalfx.com ( {REALM}.signalfx.com  ). 
+To set your realm, use a subdomain, such as ingest.us1.signalfx.com or ingest.eu0.signalfx.com.
 
 To locate your realm:
 
@@ -79,54 +78,36 @@ To locate your realm:
 2. Click **My Profile**.
 3. Next to **Organizations**, review the listed realm.
 
-Additionally, you must adjust the variables you set to the correct realm ingest endpoint (``https://ingest.{REALM}.signalfx.com``). These variables include ``SIGNALFX_ENDPOINT_URL``, ``SIGNALFX_TRACING_URL``, ``SIGNALFX_METRICS_URL``, and ``SIGNALFX_INGEST_ENDPOINT``. 
-
-
-~~~~~
 
 Step 3: Set environment variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
-Based on your realm, you may need to set specific environment variables. 
-  * Regardless of your realm, every user must set SIGNALFX_ACCESS_TOKEN. 
-  * If you are not in the us0 realm, then you must set SIGNALFX_ENDPOINT_URL. 
-  * While SignalFx defaults to the us0 realm, all other environment variables can be optionally set. 
-  
-Review the following examples to understand how to set your environment variables: 
+1. Set SIGNALFX_ACCESS_TOKEN with your correct access token. Review the following example. 
 
 .. code:: bash
 
     SIGNALFX_ACCESS_TOKEN=access token
+
+
+2. If you use POPS, Smart Gatway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (SignalFx defaults to the us0 realm. As a result, if you are in a different realm, you must explictly set the realm.) You can update one of the varibles below. Review the following examples.  
+
+.. code:: bash
+
     SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
     SIGNALFX_METRICS_URL=ingest endpoint [ default: https://pops.signalfx.com ]
+        
+    
+3. As an optional step, review the following examples to understand how to set additional and optional environment variables: 
+
+.. code:: bash
+
     SIGNALFX_SEND_TIMEOUT=timeout in seconds for sending datapoint [ default: 0.3 ]
     SIGNALFX_TRACING_URL=tracing endpoint [ default: https://ingest.signalfx.com/v1/trace ]
-
-
-You can use ``SIGNALFX_ENDPOINT_URL`` to configure a common endpoint for metrics and
-traces. In other words, you can set ``SIGNALFX_ENDPOINT_URL`` to replace ``SIGNALFX_TRACING_URL`` and ``SIGNALFX_METRICS_URL``. However, if you explicitly set either ``SIGNALFX_TRACING_URL`` or ``SIGNALFX_METRICS_URL``, then ``SIGNALFX_ENDPOINT_URL`` will be overwritten.  
-
-Review the following examples. 
-
-If only ``SIGNALFX_ENDPOINT_URL`` is set, then both metrics and traces will be sent to the gateway address:
-
-.. code:: bash
-
-    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
-
-
-If both ``SIGNALFX_ENDPOINT_URL`` and ``SIGNALFX_METRICS_URL`` are set, then traces will be sent to the gateway and metrics will go through POPS.
-
-.. code:: bash
     
-    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
-    SIGNALFX_METRICS_URL=https://pops.signalfx.com
 
-
-~~~~~
 
 Step 4: Wrap a function
-~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 There are two wrappers provided.
 
@@ -153,10 +134,8 @@ The decorators can be used individually or together.
         # your code
 
 
-~~~~~
-
 Step 5: Send custom metrics from the Lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------------------
 
 1. Run the following command in your command line: 
 
@@ -170,10 +149,9 @@ Step 5: Send custom metrics from the Lambda function
     # sending counter metric with no dimension
     signalfx_lambda.send_counter('database_calls', 1)
 
-~~~~~
 
 Step 6: Add tracing to the Lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 1. To trace critical parts of your handler
 function, run the following command in your command line: 
@@ -194,37 +172,13 @@ function, run the following command in your command line:
 
 To review more examples and usage details, see 
 ` Jaeger Python Tracer documentation <https://github.com/signalfx/jaeger-client-python>`_.
+    
 
-~~~~~
+Additional information 
+------------------------
 
-Step 7: Test configurations locally 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Run the following command in your command line: 
-
-.. code::
-
-    pip install python-lambda-local
-
-.. code::
-
-    python-lambda-local tests/test.py tests/event.json -a 'arn:aws:lambda:us-east-1:accountId:function:functionNamePython:$LATEST'
-
-~~~~~
-
-Step 8: Install a Python package (build a wheel)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Run the following command in your command line: 
-
-.. code::
-
-    python setup.py bdist_wheel --universal
-
-~~~~~
-
-Additional information - Metrics and dimensions sent by the metrics wrapper
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Metrics and dimensions sent by the metrics wrapper
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Lambda wrapper sends the following metrics to SignalFx:
 
@@ -285,11 +239,9 @@ to SignalFx:
 |                                  | ‘lambda_wrapper’                 |
 +----------------------------------+----------------------------------+
 
-~~~~~
 
-Additional information - Tags sent by the tracing wrapper 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+Tags sent by the tracing wrapper 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The tracing wrapper creates a span for the wrapper handler. This span contains the following tags:
 
 +----------------------------------+----------------------------------+
@@ -328,6 +280,33 @@ The tracing wrapper creates a span for the wrapper handler. This span contains t
 |                                  | ‘python-lambda-wrapper’          |
 +----------------------------------+----------------------------------+
 
-~~~~~
 
+Steps 7 & 8 don't have (and shouldn't) be done by most users. This is rather info for contributors who want to test changes they do in the wrapper and/or publish a new version. As such, I would vote to have them in last separate section with a title "For contributors" or "For maintainers" or just "Additional info". The metrics and dimensions and tags which are now last are probably of interest to most users, but this two steps are not.
+
+
+Test configurations locally 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+For users who are interested in testing changes to a wrapper or in publishing a new version, run the following commmand in your command line: 
+
+
+.. code::
+
+    pip install python-lambda-local
+
+.. code::
+
+    python-lambda-local tests/test.py tests/event.json -a 'arn:aws:lambda:us-east-1:accountId:function:functionNamePython:$LATEST'
+
+
+Publish a new version
+^^^^^^^^^^^^^^^^^^^^^^^
+For users who are interested in publishing a new version, run the following command in your command line to install a new Python package (build a wheel): 
+
+.. code::
+
+    python setup.py bdist_wheel --universal
+    
+License
+^^^^^^^^
+Apache Software License v2. Copyright © 2014-2019 SignalFx    
 
