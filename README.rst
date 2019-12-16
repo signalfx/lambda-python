@@ -4,7 +4,7 @@ SignalFx Python Lambda Wrapper
 Overview
 ---------
 
-You can use this document to add a SignalFx wrapper to your AWS Lambda, specifically for Python. 
+You can use this document to add a SignalFx wrapper to your AWS Lambda for Python. 
 
 The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
 
@@ -155,7 +155,75 @@ The decorators can be used individually or together.
 
 ~~~~~
 
-Step 5: Review the metrics and dimensions sent by the metrics wrapper
+Step 5: Send custom metrics from the Lambda function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Run the following command in your command line: 
+
+.. code:: python
+
+    import signalfx_lambda
+
+    # sending application_performance metric with value 100 and dimension abc:def
+    signalfx_lambda.send_gauge('application_performance', 100, {'abc':'def'})
+
+    # sending counter metric with no dimension
+    signalfx_lambda.send_counter('database_calls', 1)
+
+~~~~~
+
+Step 6: Add tracing to the Lambda function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. To trace critical parts of your handler
+function, run the following command in your command line: 
+
+.. code:: python
+
+    import opentracing
+
+    tracer = opentracing.tracer
+
+    def some_function():
+        with tracer.start_active_span("span_name", tags=tags) as scope:
+
+            # do some work
+
+            span = scope.span
+            span.set_tag("example_tag", "example_value")
+
+To review more examples and usage details, see 
+` Jaeger Python Tracer documentation <https://github.com/signalfx/jaeger-client-python>`_.
+
+~~~~~
+
+Step 7: Test configurations locally 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Run the following command in your command line: 
+
+.. code::
+
+    pip install python-lambda-local
+
+.. code::
+
+    python-lambda-local tests/test.py tests/event.json -a 'arn:aws:lambda:us-east-1:accountId:function:functionNamePython:$LATEST'
+
+~~~~~
+
+Step 8: Install a Python package (build a wheel)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Run the following command in your command line: 
+
+.. code::
+
+    python setup.py bdist_wheel --universal
+
+~~~~~
+
+Additional information - Metrics and dimensions sent by the metrics wrapper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Lambda wrapper sends the following metrics to SignalFx:
@@ -219,7 +287,7 @@ to SignalFx:
 
 ~~~~~
 
-Step 6: Review the tags send by the tracing wrapper 
+Additional information - Tags sent by the tracing wrapper 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The tracing wrapper creates a span for the wrapper handler. This span contains the following tags:
@@ -259,74 +327,6 @@ The tracing wrapper creates a span for the wrapper handler. This span contains t
 | component                        | The literal value of             |
 |                                  | ‘python-lambda-wrapper’          |
 +----------------------------------+----------------------------------+
-
-~~~~~
-
-Step 7: Send custom metrics from the Lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Run the following command in your command line: 
-
-.. code:: python
-
-    import signalfx_lambda
-
-    # sending application_performance metric with value 100 and dimension abc:def
-    signalfx_lambda.send_gauge('application_performance', 100, {'abc':'def'})
-
-    # sending counter metric with no dimension
-    signalfx_lambda.send_counter('database_calls', 1)
-
-~~~~~
-
-Step 8: Add tracing to the Lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. To trace critical parts of your handler
-function, run the following command in your command line: 
-
-.. code:: python
-
-    import opentracing
-
-    tracer = opentracing.tracer
-
-    def some_function():
-        with tracer.start_active_span("span_name", tags=tags) as scope:
-
-            # do some work
-
-            span = scope.span
-            span.set_tag("example_tag", "example_value")
-
-To review more examples and usage details, see 
-` Jaeger Python Tracer documentation <https://github.com/signalfx/jaeger-client-python>`_.
-
-~~~~~
-
-Step 9: Test configurations locally 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Run the following command in your command line: 
-
-.. code::
-
-    pip install python-lambda-local
-
-.. code::
-
-    python-lambda-local tests/test.py tests/event.json -a 'arn:aws:lambda:us-east-1:accountId:function:functionNamePython:$LATEST'
-
-~~~~~
-
-Step 10: Install a Python package (build a wheel)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Run the following command in your command line: 
-
-.. code::
-
-    python setup.py bdist_wheel --universal
 
 ~~~~~
 
