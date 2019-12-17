@@ -10,31 +10,25 @@ The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function ha
 
 At a high-level, to add a SignalFx python lambda wrapper, you can either package it yourself or you can use a Lambda layer containing the wrapper, and then attach the layer to a Lambda function.
 
+To learn more about Lambda Layers, please visit the AWS documentation site and see [AWS Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
 
 Step 1: Add the Lambda wrapper in AWS
 -----------------------------------------
 
 To add the SignalFx wrapper, you have the following options:
-   * Option 1: Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.
-   * Option 2: In AWS, create a Lambda function, then attach a SignalFx-hosted layer with a wrapper.
-   * Option 3: In AWS, create a Lambda function, then create and attach a layer based on a SignalFx SAM (Serverless Application Model) template.
+   
+   * Option 1: In AWS, create a Lambda function, then attach a SignalFx-hosted layer with a wrapper.
+      * If you are already using Lambda layers, then SignalFx recommends that you follow this option. 
+   * Option 2: In AWS, create a Lambda function, then create and attach a layer based on a SignalFx SAM (Serverless Application Model) template.
+      * If you are already using Lambda layers, then SignalFx recommends that you follow this option. 
+   * Option 3: Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.   
+      
+Review the appropriate options below.
 
-Review the appropriate option below.
+Option 1: Create a Lambda function, then attach the SignalFx-hosted Lambda layer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Option 1: Install the wrapper
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Run the following installation script in your command line:
-
-.. code::
-
-    pip install signalfx_lambda
-
-
-Option 2: Create a Lambda function, then attach the SignalFx-hosted layer
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-In this option, you will use a layer created and hosted by SignalFx.
+In this option, you will use a Lambda layer created and hosted by SignalFx.
 
 1. To verify compatibility, review the list of supported regions. See [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 2. Open your AWS console. 
@@ -49,8 +43,7 @@ In this option, you will use a layer created and hosted by SignalFx.
 11. Enter an ARN number. 
   * To locate the ARN number, see [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
-
-Option 3: Create a Lambda function, then create and attach a layer based on a SignalFx template
+Option 2: Create a Lambda function, then create and attach a layer based on a SignalFx template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this option, you will chose a SignalFx template, and then deploy a copy of the layer.
@@ -63,12 +56,21 @@ In this option, you will chose a SignalFx template, and then deploy a copy of th
 6. In the search field, enter and select **signalfx-lambda-python-wrapper**.
 7. Review the template, permissions, licenses, and then click **Deploy**.
     * A copy of the layer will now be deployed into your account.
-8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy.  
+8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy. 
+
+Option 3: Install the wrapper package with pip
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Run the following installation script in your command line:
+
+.. code::
+
+    pip install signalfx_lambda
 
 
 Step 2: Locate and set the ingest endpoint
 -------------------------------------------
-By default, this function wrapper will send data to the us0 realm. If you are not in us0 realm and you want to use the ingest endpoint directly, then you muset set your realm. 
+By default, this function wrapper will send data to the us0 realm. If you are not in us0 realm and you want to use the ingest endpoint directly, then you must set your realm. 
 
 To set your realm, use a subdomain, such as ingest.us1.signalfx.com or ingest.eu0.signalfx.com.
 
@@ -91,12 +93,16 @@ Please note for environment variables, SignalFx defaults to the us0 realm. As a 
     SIGNALFX_ACCESS_TOKEN=access token
 
 
-2. If you use POPS, Smart Gatway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (SignalFx defaults to the us0 realm. As a result, if you are in a different realm, you must explictly set the realm.) You can update one of the varibles below. Review the following examples.  
+2. If you use POPS, Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (SignalFx defaults to the us0 realm. As a result, if you are in a different realm, you must explictly set the realm.) You can update one of the varibles below. Review the following examples.  
 
 .. code:: bash
 
     SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
     SIGNALFX_METRICS_URL=ingest endpoint [ default: https://pops.signalfx.com ]
+    
+To learn more, see: 
+  * [SignalFx Point of Presence Service (POPS)](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.signalfx.point.of.presence.service.(pops).html)
+  * [Deploying the SignalFx Smart Gateway](https://docs.signalfx.com/en/latest/apm/apm-deployment/smart-gateway.html)
         
     
 3. As an optional step, review the following examples to understand how to set additional and optional environment variables: 
@@ -172,8 +178,7 @@ function, run the following command in your command line:
             span = scope.span
             span.set_tag("example_tag", "example_value")
 
-To review more examples and usage details, see 
-` Jaeger Python Tracer documentation <https://github.com/signalfx/jaeger-client-python>`_.
+To review more examples and usage details, see [Jaeger Python Tracer](https://github.com/signalfx/jaeger-client-python>).
     
 
 Additional information 
@@ -285,8 +290,8 @@ The tracing wrapper creates a span for the wrapper handler. This span contains t
 
 
 Test locally 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-For users who are interested in testing changes to a wrapper, run the following commmand in your command line: 
+^^^^^^^^^^^^^^^^^
+For users who are interested in testing changes to a wrapper, run the following command in your command line: 
 
 
 .. code::
