@@ -82,6 +82,8 @@ To locate your realm:
 Step 3: Set environment variables
 ----------------------------------
 
+Please note for environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables. 
+
 1. Set SIGNALFX_ACCESS_TOKEN with your correct access token. Review the following example. 
 
 .. code:: bash
@@ -281,12 +283,10 @@ The tracing wrapper creates a span for the wrapper handler. This span contains t
 +----------------------------------+----------------------------------+
 
 
-Steps 7 & 8 don't have (and shouldn't) be done by most users. This is rather info for contributors who want to test changes they do in the wrapper and/or publish a new version. As such, I would vote to have them in last separate section with a title "For contributors" or "For maintainers" or just "Additional info". The metrics and dimensions and tags which are now last are probably of interest to most users, but this two steps are not.
 
-
-Test configurations locally 
+Test locally 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-For users who are interested in testing changes to a wrapper or in publishing a new version, run the following commmand in your command line: 
+For users who are interested in testing changes to a wrapper, run the following commmand in your command line: 
 
 
 .. code::
