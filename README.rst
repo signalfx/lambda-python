@@ -6,9 +6,9 @@ Overview
 
 You can use this document to add a SignalFx wrapper to your AWS Lambda for Python. 
 
-The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which will allow metrics and traces to be sent to SignalFx.
+The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which allows metrics and traces to be sent to SignalFx.
 
-At a high-level, to add a SignalFx python lambda wrapper, you can either package it yourself or you can use a Lambda layer containing the wrapper, and then attach the layer to a Lambda function.
+At a high-level, to add a SignalFx python lambda wrapper, you can package the code yourself or use a Lambda layer containing the wrapper and then attach the layer to a Lambda function.
 
 To learn more about Lambda Layers, please visit the AWS documentation site and see [AWS Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
 
@@ -19,12 +19,12 @@ To add the SignalFx wrapper, you have the following options:
    
    * Option 1: In AWS, create a Lambda function, then attach a SignalFx-hosted layer with a wrapper.
       * If you are already using Lambda layers, then SignalFx recommends that you follow this option. 
+      * In this option, you will use a Lambda layer created and hosted by SignalFx.
    * Option 2: In AWS, create a Lambda function, then create and attach a layer based on a SignalFx SAM (Serverless Application Model) template.
       * If you are already using Lambda layers, then SignalFx recommends that you follow this option. 
+      * In this option, you will choose a SignalFx template, and then deploy a copy of the layer.
    * Option 3: Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.   
       
-Review the appropriate options below.
-
 Option 1: Create a Lambda function, then attach the SignalFx-hosted Lambda layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -46,7 +46,7 @@ In this option, you will use a Lambda layer created and hosted by SignalFx.
 Option 2: Create a Lambda function, then create and attach a layer based on a SignalFx template
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this option, you will chose a SignalFx template, and then deploy a copy of the layer.
+In this option, you will choose a SignalFx template, and then deploy a copy of the layer.
 
 1. Open your AWS console. 
 2. In the landing page, under **Compute**, click **Lambda**.
@@ -70,7 +70,7 @@ Run the following installation script in your command line:
 
 Step 2: Locate and set the ingest endpoint
 -------------------------------------------
-By default, this function wrapper will send data to the us0 realm. If you are not in us0 realm and you want to use the ingest endpoint directly, then you must set your realm. 
+By default, this function wrapper will send data to the us0 realm. As a result, if you are not in us0 realm and you want to use the ingest endpoint directly, then you must set your realm. 
 
 To set your realm, use a subdomain, such as ingest.us1.signalfx.com or ingest.eu0.signalfx.com.
 
@@ -84,7 +84,7 @@ To locate your realm:
 Step 3: Set environment variables
 ----------------------------------
 
-Please note for environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables. 
+For environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables. 
 
 1. Set SIGNALFX_ACCESS_TOKEN with your correct access token. Review the following example. 
 
@@ -93,7 +93,7 @@ Please note for environment variables, SignalFx defaults to the us0 realm. As a 
     SIGNALFX_ACCESS_TOKEN=access token
 
 
-2. If you use POPS, Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (SignalFx defaults to the us0 realm. As a result, if you are in a different realm, you must explictly set the realm.) You can update one of the varibles below. Review the following examples.  
+2. If you use POPS, Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (Remember, SignalFx defaults to the us0 realm. As a result, if you are in a different realm, you must explicitly set the realm.) You can update one of the variables below. Review the following examples.  
 
 .. code:: bash
 
@@ -105,7 +105,7 @@ To learn more, see:
   * [Deploying the SignalFx Smart Gateway](https://docs.signalfx.com/en/latest/apm/apm-deployment/smart-gateway.html)
         
     
-3. As an optional step, review the following examples to understand how to set additional and optional environment variables: 
+3. As an optional step, review the following examples to understand how to set additional environment variables: 
 
 .. code:: bash
 
@@ -121,7 +121,7 @@ There are two wrappers provided.
 
 The decorators can be used individually or together.
 
-1. For metrics, decorate your handler with @signalfx_lambda.emits_metrics
+1. For metrics, decorate your handler with **@signalfx_lambda.emits_metrics**.
 
 .. code:: python
 
@@ -131,7 +131,7 @@ The decorators can be used individually or together.
     def handler(event, context):
         # your code
 
-2. For tracing, decorate your handler with @signalfx_lambda.is_traced 
+2. For tracing, decorate your handler with **@signalfx_lambda.is_traced**> 
 
 .. code:: python
 
@@ -291,7 +291,7 @@ The tracing wrapper creates a span for the wrapper handler. This span contains t
 
 Test locally 
 ^^^^^^^^^^^^^^^^^
-For users who are interested in testing changes to a wrapper, run the following command in your command line: 
+For users who are interested in testing changes to a wrapper, run the following commands in your command line: 
 
 
 .. code::
