@@ -8,7 +8,7 @@ You can use this document to add a SignalFx wrapper to your AWS Lambda for Pytho
 
 The SignalFx Python Lambda Wrapper wraps around an AWS Lambda Python function handler, which allows metrics and traces to be sent to SignalFx.
 
-At a high-level, to add a SignalFx python lambda wrapper, you can package the code yourself, or you can use a Lambda layer containing the wrapper and then attach the layer to a Lambda function.
+At a high-level, to add a SignalFx Python lambda wrapper, you can package the code yourself, or you can use a Lambda layer containing the wrapper and then attach the layer to a Lambda function.
 
 To learn more about Lambda Layers, please visit the AWS documentation site and see [AWS Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
 
