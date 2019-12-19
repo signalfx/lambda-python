@@ -88,13 +88,25 @@ Step 3: Set environment variables
 
     SIGNALFX_ACCESS_TOKEN=access token
 
+2. If you use POPS, Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (For environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables.) There are two options: 
 
-2. If you use POPS, Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (For environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables.) You can update one of the variables below. Review the following examples.  
+**Option 1**
+
+You can update ``SIGNALFX_ENDPOINT_URL`` where both metrics and traces will be sent to the gateway address. Note that the path ``/v1/trace`` will be automatically added to the endpoint for traces.
 
 .. code:: bash
 
     SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
-    SIGNALFX_METRICS_URL=ingest endpoint [ default: https://pops.signalfx.com ]
+    
+
+**Option 2**
+
+You can update ``SIGNALFX_ENDPOINT_URL`` and ``SIGNALFX_METRICS_URL`` where traces will be sent to the gateway and metrics will go through POPS, respectively. 
+
+.. code:: bash
+
+    SIGNALFX_METRICS_URL=https://pops.signalfx.com
+    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
     
 To learn more, see: 
   * [SignalFx Point of Presence Service (POPS)](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.signalfx.point.of.presence.service.(pops).html)
