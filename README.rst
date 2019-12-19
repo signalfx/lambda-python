@@ -113,14 +113,13 @@ To learn more, see:
   * [Deploying the SignalFx Smart Gateway](https://docs.signalfx.com/en/latest/apm/apm-deployment/smart-gateway.html)
         
     
-3. (Optional) Set additional environment variable. Review the following examples.  
+3. (Optional) Set additional environment variables. Review the following examples.  
 
 .. code:: bash
 
     SIGNALFX_SEND_TIMEOUT=timeout in seconds for sending datapoint [ default: 0.3 ]
     SIGNALFX_TRACING_URL=tracing endpoint [ default: https://ingest.signalfx.com/v1/trace ]
     
-
 
 Step 4: Wrap a function
 --------------------------
