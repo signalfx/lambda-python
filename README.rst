@@ -152,7 +152,7 @@ The decorators can be used individually or together.
 Step 5: Send custom metrics from a Lambda function
 -------------------------------------------------------
 
-1. To send custom metrics from a Lambda function, run the following commands in your command line: 
+1. To send custom metrics from a Lambda function, include the following code in your function:
 
 .. code:: python
 
@@ -168,7 +168,7 @@ Step 5: Send custom metrics from a Lambda function
 Step 6: Add tracing to the Lambda function
 -------------------------------------------
 
-1. To trace critical parts of your handler function, run the following command in your command line: 
+1. To trace critical parts of your handler function, include the following code in your function:
 
 .. code:: python
 
@@ -319,5 +319,5 @@ If you would like to publish a new version, run the following command in your co
     
 License
 ^^^^^^^^
-Apache Software License v2. Copyright © 2014-2019 SignalFx    
+Apache Software License v2. Copyright © 2014-2020 SignalFx    
 
