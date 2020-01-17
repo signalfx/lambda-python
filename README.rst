@@ -319,5 +319,5 @@ If you would like to publish a new version, run the following command in your co
     
 License
 ^^^^^^^^
-Apache Software License v2. Copyright © 2014-2020 SignalFx    
+Apache Software License v2. Copyright © 2014-2020 Splunk.
 
