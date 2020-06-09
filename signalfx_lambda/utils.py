@@ -54,7 +54,7 @@ def get_metrics_url():
         url = os.environ.get('SIGNALFX_METRICS_URL')
 
     if not url:
-        url = os.environ.get('SIGNALFX_ENDPOINT_URL', 'https://pops.signalfx.com')
+        url = os.environ.get('SIGNALFX_ENDPOINT_URL', 'https://ingest.us0.signalfx.com')
 
     return url
 
