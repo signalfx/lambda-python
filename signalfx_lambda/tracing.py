@@ -17,6 +17,11 @@ def wrapper(func):
         span_tags['component'] = 'python-lambda-wrapper'
         span_tags[ext_tags.SPAN_KIND] = ext_tags.SPAN_KIND_RPC_SERVER
 
+        environment = os.getenv('SIGNALFX_ENVIRONMENT')
+
+        if environment:
+            span_tags['environment'] = environment
+
         span_prefix = os.getenv('SIGNALFX_SPAN_PREFIX', 'lambda_python_')
 
         try:

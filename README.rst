@@ -120,6 +120,11 @@ To learn more, see:
     SIGNALFX_TRACING_URL=tracing endpoint [ default: https://ingest.signalfx.com/v1/trace ]
     
 
+4. (Optional) Set environment variable to set `environment` root span tag
+
+.. code:: bash
+    SIGNALFX_ENVIRONMENT=production
+
 Step 4: Wrap a function
 --------------------------
 
@@ -290,6 +295,9 @@ The tracing wrapper creates a span for the wrapper handler. This span contains t
 +----------------------------------+----------------------------------+
 | component                        | The literal value of             |
 |                                  | ‘python-lambda-wrapper’          |
++----------------------------------+----------------------------------+
+| environment                      | Environment name defined by      |
+|                                  | SIGNALFX_ENVIRONMENT             |
 +----------------------------------+----------------------------------+
 
 
