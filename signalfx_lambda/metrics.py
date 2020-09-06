@@ -108,23 +108,25 @@ def generate_wrapper_decorator(access_token):
     return wrapper_decorator
 
 
-def wrapper(*args, **kwargs):
-    access_token = utils.get_access_token()
-    if len(args) == 1 and callable(args[0]):
-        # plain wrapper with no parameter
-        # call the wrapper decorator like normally would
-        decorator = generate_wrapper_decorator(access_token)
-        return decorator(args[0])
-    else:
-        dimensions = kwargs.get('dimensions')
-        if isinstance(dimensions, dict):
-            # wrapper with dimension parameter
-            # assign default dimensions
-            # then return the wrapper decorator
-            default_dimensions.update(dimensions)
+def wrapper():
+    def inner(*args, **kwargs):
+        access_token = utils.get_access_token()
+        if len(args) == 1 and callable(args[0]):
+            # plain wrapper with no parameter
+            # call the wrapper decorator like normally would
+            decorator = generate_wrapper_decorator(access_token)
+            return decorator(args[0])
+        else:
+            dimensions = kwargs.get('dimensions')
+            if isinstance(dimensions, dict):
+                # wrapper with dimension parameter
+                # assign default dimensions
+                # then return the wrapper decorator
+                default_dimensions.update(dimensions)
 
-        token = kwargs.get('access_token')
-        if isinstance(token, six.string_types):
-            access_token = token
+            token = kwargs.get('access_token')
+            if isinstance(token, six.string_types):
+                access_token = token
 
-        return generate_wrapper_decorator(access_token)
+            return generate_wrapper_decorator(access_token)
+    return inner

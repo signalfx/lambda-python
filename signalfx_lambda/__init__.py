@@ -7,17 +7,16 @@ from . import tracing
 from .version import name, version
 
 
-# backwards compatibility
-def wrapper(*args, **kwargs):
-    return metrics.wrapper(*args, **kwargs)
-
-
 def emits_metrics(*args, **kwargs):
     return metrics.wrapper(*args, **kwargs)
 
 
 def is_traced(*args, **kwargs):
     return tracing.wrapper(*args, **kwargs)
+
+
+# backwards compatibility
+wrapper = emits_metrics
 
 
 # less convenient method
