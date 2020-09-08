@@ -41,6 +41,7 @@ In this option, you will use a Lambda layer created and hosted by SignalFx.
 9. Click on **Layers**, then add a layer.
 10. Mark **Provide a layer version**.
 11. Enter an ARN number. 
+
   * To locate the ARN number, see [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
 Option 2: Create a Lambda function, then create and attach a layer based on a SignalFx template
