@@ -133,7 +133,7 @@ The decorators can be used individually or together.
 
     import signalfx_lambda
 
-    @signalfx_lambda.emits_metrics
+    @signalfx_lambda.emits_metrics()
     def handler(event, context):
         # your code
 
@@ -143,9 +143,23 @@ The decorators can be used individually or together.
 
     import signalfx_lambda
 
-    @signalfx_lambda.is_traced
+    @signalfx_lambda.is_traced()
     def handler(event, context):
         # your code
+
+3. Optionally, you can tell the wrapper to not auto-create a span but still initialize tracing for manual usage.
+
+This is useful when processing SQS messages and you want each message to tie to the trace from producer that emitted the message.
+
+.. code:: python
+
+    import signalfx_lambda
+
+    @signalfx_lambda.is_traced(with_span=False)
+    def handler(event, context):
+        for record in event.get('Records', []):
+            with signalfx_lambda.create_span(record, context):
+                # your code to process record
 
 
 Step 5: Send custom metrics from a Lambda function
