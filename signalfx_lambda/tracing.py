@@ -61,11 +61,25 @@ def init_jaeger_tracer(context):
     return tracer
 
 
+def inject(carrier, ctx=None):
+    if not _tracer:
+        raise RuntimeError((
+            'tracing has not been initialized. Use signalfx_lambda.is_traced'
+            ' decorator to initialize tracing'))
+    if not ctx:
+        scope = _tracer.scope_manager.active
+        if scope and scope.span:
+            ctx = scope.span.context
+
+    if ctx:
+        _tracer.inject(ctx, opentracing.Format.HTTP_HEADERS, carrier)
+
+
 class create_span(object):
     def __init__(self, event, context, auto_add_tags=True, operation_name=None):
         if not _tracer:
             raise RuntimeError((
-                'tracing has not been initialized. Use signalfx_lambda.is_tracer'
+                'tracing has not been initialized. Use signalfx_lambda.is_traced'
                 ' decorator to initialize tracing'))
         self.event = event
         self.context = context

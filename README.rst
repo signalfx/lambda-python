@@ -199,7 +199,31 @@ Step 6: Add tracing to the Lambda function
             span.set_tag("example_tag", "example_value")
 
 To review more examples and usage details, see [Jaeger Python Tracer](https://github.com/signalfx/jaeger-client-python>).
-    
+
+Propagating trace context to outgoing requests or lambda response
+------------------------------------------------------------------
+
+The library ships a helper function to inject tracing context headers into a dictionary like object.
+The function accepts two arguments. First argument must be a dictionary like object that the trace context is injected into.
+The second argument is optional and must be a OpenTracing span context. If one is not provided, the function uses the currently
+active span. Example:
+
+.. code:: python
+
+    import signalfx_lambda
+
+    @signalfx_lambda.is_traced()
+    def handler(event, context):
+        headers = {}
+
+        # inject trace context into the headers dictionary
+        signalfx_lambda.tracing.inject(headers)
+
+        request = urllib.request.Request('http://some-service', headers=headers)
+        response = urllib.request.urlopen(request)
+
+        # your code
+
 
 Additional information 
 ------------------------
