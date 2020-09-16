@@ -218,6 +218,10 @@ active span. Example:
 
         # inject trace context into the headers dictionary
         signalfx_lambda.tracing.inject(headers)
+        
+        # Or inject traces from a specific span context instead of the 
+        # one from the active scope.
+        # signalfx_lambda.tracing.inject(headers, span.context)
 
         request = urllib.request.Request('http://some-service', headers=headers)
         response = urllib.request.urlopen(request)
