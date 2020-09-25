@@ -91,29 +91,21 @@ Step 3: Set environment variables
 
 2. If you use Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (For environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables.) There are two options: 
 
+
 **Option 1**
 
-You can update ``SIGNALFX_ENDPOINT_URL`` where both metrics and traces will be sent to the gateway address. Note that the path ``/v1/trace`` will be automatically added to the endpoint for traces.
-
-.. code:: bash
-
-    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
-    
-
-**Option 2**
-
-You can update ``SIGNALFX_ENDPOINT_URL`` and ``SIGNALFX_METRICS_URL`` where traces will be sent to the gateway and metrics will go directly to the ingest endpoint, respectively. 
+Set ``SIGNALFX_TRACING_URL`` and ``SIGNALFX_METRICS_URL`` to configure where traces and metrics will be sent to. The following example will send traces to the gateway and metrics directly to the ingest endpoint. 
 
 .. code:: bash
 
     SIGNALFX_METRICS_URL=https://ingest.us0.signalfx.com
-    SIGNALFX_ENDPOINT_URL=http://<my_gateway>:8080
+    SIGNALFX_TRACING_URL=http://<my_gateway>:8080/v1/trace
     
 To learn more, see: 
   * [Deploying the SignalFx Smart Gateway](https://docs.signalfx.com/en/latest/apm/apm-deployment/smart-gateway.html)
         
     
-3. (Optional) Set additional environment variables. Review the following examples.  
+2. (Optional) Set additional environment variables. Review the following examples.  
 
 .. code:: bash
 
