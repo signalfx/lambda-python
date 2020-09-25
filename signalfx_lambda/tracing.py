@@ -1,5 +1,6 @@
 import functools
 import os
+import logging
 import opentracing
 from opentracing.ext import tags as ext_tags
 from jaeger_client import Config
@@ -7,6 +8,11 @@ from jaeger_client import Config
 from . import utils
 
 _tracer = None
+
+logger = logging.getLogger('signalfx-tracing')
+if os.environ.get('SIGNALFX_TRACING_DEBUG', '').lower() in ['true', '1']:
+    logger.setLevel(logging.DEBUG)
+
 
 span_kind_mapping = {
     'aws:sqs': ext_tags.SPAN_KIND_CONSUMER, 
@@ -38,6 +44,7 @@ def init_jaeger_tracer(context):
     service_name = os.getenv('SIGNALFX_SERVICE_NAME', context.function_name)
     access_token = utils.get_access_token()
 
+    logger = logging.getLogger('signalfx-tracing')
     tracer_config = {
             'sampler': {
                 'type': 'const',
@@ -46,6 +53,7 @@ def init_jaeger_tracer(context):
             'propagation': 'b3',
             'jaeger_endpoint': endpoint,
             'logging': True,
+            'logger': logger,
             }
 
     if access_token:
