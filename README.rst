@@ -151,7 +151,7 @@ This is useful when processing SQS messages and you want each message to tie to 
     @signalfx_lambda.is_traced(with_span=False)
     def handler(event, context):
         for record in event.get('Records', []):
-            with signalfx_lambda.create_span(record, context):
+            with signalfx_lambda.tracing.create_span(record, context):
                 # your code to process record
 
 
