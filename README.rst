@@ -179,10 +179,14 @@ Step 6: Add tracing to the Lambda function
 .. code:: python
 
     import opentracing
-
-    tracer = opentracing.tracer
-
+    
+    @signalfx_lambda.is_traced()
     def some_function():
+        # opentracing.tracer must be referenced from within
+        # a function decorated with the is_traced() decorator
+        # or it'll not reference the correct tracer initialized
+        # for the lambda function.
+        tracer = opentracing.tracer
         with tracer.start_active_span("span_name", tags=tags) as scope:
 
             # do some work
