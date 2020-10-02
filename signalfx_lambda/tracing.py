@@ -3,6 +3,7 @@ import os
 import logging
 import opentracing
 from opentracing.ext import tags as ext_tags
+from signalfx_tracing import auto_instrument
 from jaeger_client import Config
 
 from . import utils
@@ -33,13 +34,17 @@ def wrapper(with_span=True):
             except BaseException as e:
                 raise
             finally:
-                tracer.close()
+                tracer.flush()
 
         return call
     return inner
 
 
 def init_jaeger_tracer(context):
+    global _tracer
+    if _tracer:
+        return _tracer
+
     endpoint = utils.get_tracing_url()
     service_name = os.getenv('SIGNALFX_SERVICE_NAME', context.function_name)
     access_token = utils.get_access_token()
@@ -63,8 +68,8 @@ def init_jaeger_tracer(context):
     config = Config(config=tracer_config, service_name=service_name)
 
     tracer = config.new_tracer()
-    global _tracer
     _tracer = opentracing.tracer = tracer
+    auto_instrument(_tracer)
 
     return tracer
 
