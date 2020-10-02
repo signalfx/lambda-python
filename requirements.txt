@@ -1,3 +1,4 @@
 signalfx>=1.0.16
 signalfx-tracing>=1.5.1
+sfx-jaeger-client>=3.13.1b0.dev5
 six>=1.4.0
