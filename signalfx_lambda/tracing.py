@@ -102,7 +102,12 @@ class create_span(object):
         self.scope = None
     
     def __enter__(self):
-        headers = self.event.get('headers', self.event.get('attributes', {}))
+        if isinstance(self.event, dict):
+            event = self.event
+        else:
+            event = {}
+
+        headers = event.get('headers', event.get('attributes', {}))
         parent_span = self.tracer.extract(opentracing.Format.HTTP_HEADERS, headers)
 
         span_tags = {}
@@ -110,7 +115,7 @@ class create_span(object):
             span_tags = utils.get_tracing_fields(self.context)
             span_tags['component'] = 'python-lambda-wrapper'
             span_tags[ext_tags.SPAN_KIND] = span_kind_mapping.get(
-                self.event.get('eventSource'),
+                event.get('eventSource'),
                 ext_tags.SPAN_KIND_RPC_SERVER
             )
 
