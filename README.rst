@@ -338,29 +338,29 @@ Auto-instrumentation packages
 
 The SignalFx Python Lambda Wrapper can automatically instrument supported packages. All you need to do is to install instrumentations you need in addition to `signalfx_lambda`. Below is a list of all instrumentation packages supported:
 
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| Library/Framework        | Instrumentation Package                                                                              |
-+==========================+======================================================================================================+
-| celery                   | ``https://github.com/signalfx/python-celery/tarball/0.0.1post0#egg=celery-opentracing``              |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| django                   | ``https://github.com/signalfx/python-django/tarball/0.1.18post1#egg=django-opentracing``             |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| elasticsearch            | ``https://github.com/signalfx/python-elasticsearch/tarball/0.1.4post#egg=elasticsearch-opentracing`` |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| flask                    | ``https://github.com/signalfx/python-flask/tarball/1.1.0post1#egg=flask_opentracing``                |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| psycopg                  | ``https://github.com/signalfx/python-dbapi/tarball/v0.0.5post1#egg=dbapi-opentracing``               |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| pymongo                  | ``https://github.com/signalfx/python-pymongo/tarball/v0.0.3post1#egg=pymongo-opentracing``           |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| pymysql                  | ``https://github.com/signalfx/python-dbapi/tarball/v0.0.5post1#egg=dbapi-opentracing``               |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| redis                    | ``https://github.com/signalfx/python-redis/tarball/v1.0.0post1#egg=redis-opentracing``               |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| requests                 | ``https://github.com/signalfx/python-requests/archive/v0.2.0post1.zip#egg=requests-opentracing``     |
-+--------------------------+------------------------------------------------------------------------------------------------------+
-| tornado                  | ``https://github.com/signalfx/python-tornado/archive/1.0.1post1.zip#egg=tornado_opentracing``        |
-+--------------------------+------------------------------------------------------------------------------------------------------+
++--------------------------+--------------------------------------------+
+| Library/Framework        | Instrumentation Package                    |
++==========================+============================================+
+| celery                   | ``signalfx-instrumentation-celery``        |
++--------------------------+--------------------------------------------+
+| django                   | ``signalfx-instrumentation-django``        |
++--------------------------+--------------------------------------------+
+| elasticsearch            | ``signalfx-instrumentation-elasticsearch`` |
++--------------------------+--------------------------------------------+
+| flask                    | ``signalfx-instrumentation-flask`          |
++--------------------------+--------------------------------------------+
+| psycopg                  | ``signalfx-instrumentation-dbapi``         |
++--------------------------+--------------------------------------------+
+| pymongo                  | ``signalfx-instrumentation-pymongo``       |
++--------------------------+--------------------------------------------+
+| pymysql                  | ``signalfx-instrumentation-dbapi``         |
++--------------------------+--------------------------------------------+
+| redis                    | ``signalfx-instrumentation-redis``         |
++--------------------------+--------------------------------------------+
+| requests                 | ``signalfx-instrumentation-requests``      |
++--------------------------+--------------------------------------------+
+| tornado                  | ``signalfx-instrumentation-tornado`        |
++--------------------------+--------------------------------------------+
 
 For example, if your Lambda function uses ``requests``, then you should add ``https://github.com/signalfx/python-requests/archive/v0.2.0post1.zip#egg=requests-opentracing`` to your ``requirements.txt`` file or make sure it gets installed into the Lambda environment.
 
