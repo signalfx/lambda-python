@@ -340,27 +340,27 @@ The SignalFx Python Lambda Wrapper can automatically instrument supported packag
 
 +--------------------------+--------------------------------------------+
 | Library/Framework        | Instrumentation Package                    |
-+==========================+============================================+
-| celery                   | ``signalfx-instrumentation-celery``        |
-+--------------------------+--------------------------------------------+
-| django                   | ``signalfx-instrumentation-django``        |
-+--------------------------+--------------------------------------------+
-| elasticsearch            | ``signalfx-instrumentation-elasticsearch`` |
-+--------------------------+--------------------------------------------+
-| flask                    | ``signalfx-instrumentation-flask`          |
-+--------------------------+--------------------------------------------+
-| psycopg                  | ``signalfx-instrumentation-dbapi``         |
-+--------------------------+--------------------------------------------+
-| pymongo                  | ``signalfx-instrumentation-pymongo``       |
-+--------------------------+--------------------------------------------+
-| pymysql                  | ``signalfx-instrumentation-dbapi``         |
-+--------------------------+--------------------------------------------+
-| redis                    | ``signalfx-instrumentation-redis``         |
-+--------------------------+--------------------------------------------+
-| requests                 | ``signalfx-instrumentation-requests``      |
-+--------------------------+--------------------------------------------+
-| tornado                  | ``signalfx-instrumentation-tornado`        |
-+--------------------------+--------------------------------------------+
++==========================+=============================================+
+| celery                   | ``signalfx-instrumentation-celery``         |
++--------------------------+---------------------------------------------+
+| django                   | ``signalfx-instrumentation-django``         |
++--------------------------+---------------------------------------------+
+| elasticsearch            | ``signalfx-instrumentation-elasticsearch``  |
++--------------------------+---------------------------------------------+
+| flask                    | ``signalfx-instrumentation-flask``          |
++--------------------------+---------------------------------------------+
+| psycopg                  | ``signalfx-instrumentation-dbapi``          |
++--------------------------+---------------------------------------------+
+| pymongo                  | ``signalfx-instrumentation-pymongo``        |
++--------------------------+---------------------------------------------+
+| pymysql                  | ``signalfx-instrumentation-dbapi``          |
++--------------------------+---------------------------------------------+
+| redis                    | ``signalfx-instrumentation-redis``          |
++--------------------------+---------------------------------------------+
+| requests                 | ``signalfx-instrumentation-requests``       |
++--------------------------+---------------------------------------------+
+| tornado                  | ``signalfx-instrumentation-tornado``        |
++--------------------------+---------------------------------------------+
 
 For example, if your Lambda function uses ``requests``, then you should add ``https://github.com/signalfx/python-requests/archive/v0.2.0post1.zip#egg=requests-opentracing`` to your ``requirements.txt`` file or make sure it gets installed into the Lambda environment.
 
