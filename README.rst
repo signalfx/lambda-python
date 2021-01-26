@@ -338,8 +338,8 @@ Auto-instrumentation packages
 
 The SignalFx Python Lambda Wrapper can automatically instrument supported packages. All you need to do is to install instrumentations you need in addition to `signalfx_lambda`. Below is a list of all instrumentation packages supported:
 
-+--------------------------+--------------------------------------------+
-| Library/Framework        | Instrumentation Package                    |
++--------------------------+---------------------------------------------+
+| Library/Framework        | Instrumentation Package                     |
 +==========================+=============================================+
 | celery                   | ``signalfx-instrumentation-celery``         |
 +--------------------------+---------------------------------------------+
