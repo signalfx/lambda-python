@@ -54,7 +54,7 @@ In this option, you will choose a SignalFx template, and then deploy a copy of t
 3. Click **Create function** to create a layer with SignalFx's capabilities.
 4. Click **Browse serverless app repository**.
 5. Click **Public applications**.
-6. In the search field, enter and select **signalfx-lambda-python-wrapper**.
+6. In the search field, enter and select **wrapper-python-sfx-app**.
 7. Review the template, permissions, licenses, and then click **Deploy**.
     * A copy of the layer will now be deployed into your account.
 8. Return to the previous screen to add a layer to the function, select from list of runtime compatible layers, and then select the name of the copy. 
