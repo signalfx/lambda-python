@@ -1,3 +1,10 @@
+Deprecation Notice
+================================
+    The SignalFx Python Lambda Wrapper is deprecated. Only critical security fixes and bug fixes are provided.
+
+    Going forward, Lambda functions should use the Splunk OpenTelemetry Lambda Layer, which offers similar capabilities and fully supports the OpenTelemetry standard. To learn more about the Splunk OTel Lambda Layer, see https://docs.splunk.com/Observability/gdi/get-data-in/serverless/aws/otel-lambda-layer/instrument-lambda-functions.html#nav-Instrument-your-Lambda-function
+
+
 SignalFx Python Lambda Wrapper
 ===============================
 
