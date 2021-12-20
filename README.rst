@@ -1,3 +1,5 @@
+SignalFx was acquired by Splunk in October 2019. See https://www.splunk.com/en_us/investor-relations/acquisitions/signalfx.html for more information.
+
 Deprecation Notice
 ================================
     The SignalFx Python Lambda Wrapper is deprecated. Only critical security fixes and bug fixes are provided.
