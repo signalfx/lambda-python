@@ -1,6 +1,6 @@
 Deprecation Notice
 ================================
-    The SignalFx Python Lambda Wrapper is deprecated. Only critical security fixes and bug fixes are provided.
+    The SignalFx Python Lambda Wrapper is deprecated and will reach End of Support on December 31, 2022. After that date, this repository will be archived and no longer receive updates. Until then, only critical security fixes and bug fixes will be provided.
 
     Going forward, Lambda functions should use the Splunk OpenTelemetry Lambda Layer, which offers similar capabilities and fully supports the OpenTelemetry standard. To learn more about the Splunk OTel Lambda Layer, see https://docs.splunk.com/Observability/gdi/get-data-in/serverless/aws/otel-lambda-layer/instrument-lambda-functions.html#nav-Instrument-your-Lambda-function
 
@@ -23,15 +23,15 @@ Step 1: Add the Lambda wrapper in AWS
 -----------------------------------------
 
 To add the SignalFx wrapper, you have the following options:
-   
+
    * Option 1: In AWS, create a Lambda function, then attach a SignalFx-hosted layer with a wrapper.
-      * If you are already using Lambda layers, then SignalFx recommends that you follow this option. 
+      * If you are already using Lambda layers, then SignalFx recommends that you follow this option.
       * In this option, you will use a Lambda layer created and hosted by SignalFx.
    * Option 2: In AWS, create a Lambda function, then create and attach a layer based on a SignalFx SAM (Serverless Application Model) template.
-      * If you are already using Lambda layers, then SignalFx also recommends that you follow this option. 
+      * If you are already using Lambda layers, then SignalFx also recommends that you follow this option.
       * In this option, you will choose a SignalFx template, and then deploy a copy of the layer.
-   * Option 3: Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.   
-      
+   * Option 3: Use the wrapper as a regular dependency, and then create a Lambda function based on your artifact containing both code and dependencies.
+
 Option 1: Create a Lambda function, then attach the SignalFx-hosted Lambda layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -47,7 +47,7 @@ In this option, you will use a Lambda layer created and hosted by SignalFx.
 8. Click **Create function**. 
 9. Click on **Layers**, then add a layer.
 10. Mark **Provide a layer version**.
-11. Enter an ARN number. 
+11. Enter an ARN number.
 
   * To locate the ARN number, see [Lambda Layer Versions](https://github.com/signalfx/lambda-layer-versions/blob/master/python/PYTHON.md).
 
@@ -90,35 +90,35 @@ To locate your realm:
 Step 3: Set environment variables
 ----------------------------------
 
-1. Set SIGNALFX_ACCESS_TOKEN with your correct access token. Review the following example. 
+1. Set SIGNALFX_ACCESS_TOKEN with your correct access token. Review the following example.
 
 .. code:: bash
 
     SIGNALFX_ACCESS_TOKEN=access token
 
-2. If you use Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (For environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables.) There are two options: 
+2. If you use Smart Gateway, or want to ingest directly from a realm other than us0, then you must set at least one endpoint variable. (For environment variables, SignalFx defaults to the us0 realm. As a result, if you are not in the us0 realm, you may need to set your environment variables.) There are two options:
 
 
 **Option 1**
 
-Set ``SIGNALFX_TRACING_URL`` and ``SIGNALFX_METRICS_URL`` to configure where traces and metrics will be sent to. The following example will send traces to the gateway and metrics directly to the ingest endpoint. 
+Set ``SIGNALFX_TRACING_URL`` and ``SIGNALFX_METRICS_URL`` to configure where traces and metrics will be sent to. The following example will send traces to the gateway and metrics directly to the ingest endpoint.
 
 .. code:: bash
 
     SIGNALFX_METRICS_URL=https://ingest.us0.signalfx.com
     SIGNALFX_TRACING_URL=http://<my_gateway>:8080/v1/trace
-    
-To learn more, see: 
+
+To learn more, see:
   * [Deploying the SignalFx Smart Gateway](https://docs.signalfx.com/en/latest/apm/apm-deployment/smart-gateway.html)
-        
-    
-2. (Optional) Set additional environment variables. Review the following examples.  
+
+
+2. (Optional) Set additional environment variables. Review the following examples.
 
 .. code:: bash
 
     SIGNALFX_SEND_TIMEOUT=timeout in seconds for sending datapoint [ default: 0.3 ]
     SIGNALFX_TRACING_URL=tracing endpoint [ default: https://ingest.signalfx.com/v1/trace ]
-    
+
 
 Step 4: Wrap a function
 --------------------------
@@ -127,7 +127,7 @@ There are two wrappers provided.
 
 The decorators can be used individually or together.
 
-1. For metrics, decorate your handler with **@signalfx_lambda.emits_metrics**. Review the following example. 
+1. For metrics, decorate your handler with **@signalfx_lambda.emits_metrics**. Review the following example.
 
 .. code:: python
 
@@ -137,7 +137,7 @@ The decorators can be used individually or together.
     def handler(event, context):
         # your code
 
-2. For tracing, decorate your handler with **@signalfx_lambda.is_traced**. Review the following example. 
+2. For tracing, decorate your handler with **@signalfx_lambda.is_traced**. Review the following example.
 
 .. code:: python
 
@@ -186,7 +186,7 @@ Step 6: Add tracing to the Lambda function
 .. code:: python
 
     import opentracing
-    
+
     @signalfx_lambda.is_traced()
     def some_function():
         # opentracing.tracer must be referenced from within
@@ -221,8 +221,8 @@ active span. Example:
 
         # inject trace context into the headers dictionary
         signalfx_lambda.tracing.inject(headers)
-        
-        # Or inject traces from a specific span context instead of the 
+
+        # Or inject traces from a specific span context instead of the
         # one from the active scope.
         # signalfx_lambda.tracing.inject(headers, span.context)
 
@@ -232,7 +232,7 @@ active span. Example:
         # your code
 
 
-Additional information 
+Additional information
 ------------------------
 
 Metrics and dimensions sent by the metrics wrapper
@@ -298,7 +298,7 @@ to SignalFx:
 +----------------------------------+----------------------------------+
 
 
-Tags sent by the tracing wrapper 
+Tags sent by the tracing wrapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The tracing wrapper creates a span for the wrapper handler. This span contains the following tags:
 
@@ -371,9 +371,9 @@ The SignalFx Python Lambda Wrapper can automatically instrument supported packag
 
 For example, if your Lambda function uses ``requests``, then you should add ``https://github.com/signalfx/python-requests/archive/v0.2.0post1.zip#egg=requests-opentracing`` to your ``requirements.txt`` file or make sure it gets installed into the Lambda environment.
 
-Test locally 
+Test locally
 ^^^^^^^^^^^^^^^^^
-If you would like to test changes to a wrapper, run the following commands in your command line: 
+If you would like to test changes to a wrapper, run the following commands in your command line:
 
 
 .. code::
@@ -387,13 +387,12 @@ If you would like to test changes to a wrapper, run the following commands in yo
 
 Publish a new version
 ^^^^^^^^^^^^^^^^^^^^^^^
-If you would like to publish a new version, run the following command in your command line to install a new Python package (build a wheel): 
+If you would like to publish a new version, run the following command in your command line to install a new Python package (build a wheel):
 
 .. code::
 
     python setup.py bdist_wheel --universal
-    
+
 License
 ^^^^^^^^
 Apache Software License v2. Copyright © 2014-2020 Splunk, Inc.
-
