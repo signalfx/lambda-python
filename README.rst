@@ -1,8 +1,11 @@
-Deprecation Notice
+End of Support (EOS) Notice :warning: 
 ================================
-    The SignalFx Python Lambda Wrapper is deprecated and will reach End of Support on December 31, 2022. After that date, this repository will be archived and no longer receive updates. Until then, only critical security fixes and bug fixes will be provided.
+.. _Splunk OpenTelemetry Lambda: https://github.com/signalfx/splunk-otel-lambda/
+.. _Instrument your Lambda function: https://docs.splunk.com/Observability/gdi/get-data-in/serverless/aws/otel-lambda-layer/instrument-lambda-functions.html#nav-Instrument-your-Lambda-function
 
-    Going forward, Lambda functions should use the Splunk OpenTelemetry Lambda Layer, which offers similar capabilities and fully supports the OpenTelemetry standard. To learn more about the Splunk OTel Lambda Layer, see https://docs.splunk.com/Observability/gdi/get-data-in/serverless/aws/otel-lambda-layer/instrument-lambda-functions.html#nav-Instrument-your-Lambda-function
+    **The SignalFx Python Lambda Wrapper has reached End of Support and has been permanently archived.**
+
+    `Splunk OpenTelemetry Lambda`_ is the successor. To learn more about the Splunk OTel Lambda Layer, see `Instrument your Lambda function`_. 
 
 
 SignalFx Python Lambda Wrapper
