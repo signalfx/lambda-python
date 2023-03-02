@@ -23,6 +23,10 @@ wrapper = emits_metrics
 def send_metric(counters=[], gauges=[]):
     metrics.send_metric(counters, gauges)
 
+# convenience method
+def send_event(event_type, dimensions={}, properties={})
+    if ingest:
+        ingest.send_event(event_type=event_type, dimensions=dimensions, properties=properties)
 
 # convenience method
 def send_counter(metric_name, metric_value=1, dimensions={}):
